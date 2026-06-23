@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy Policy — Todo for Home Assistant</title>
+<meta name="description" content="Privacy policy for the Todo for Home Assistant app. No accounts, no tracking — your data stays between your device and your own Home Assistant server." />
+<meta name="robots" content="index, follow" />
+<style>
+  :root {
+    --blue: #03A9F4;
+    --blue-dark: #0277BD;
+    --ink: #1b2630;
+    --muted: #5b6b78;
+    --line: #e3eaf0;
+    --bg: #f7fbff;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 0 22px 72px; }
+  header {
+    background: linear-gradient(135deg, #29B6F6 0%, #0288D1 100%);
+    color: #fff;
+    padding: 48px 22px 40px;
+    text-align: center;
+  }
+  .brand {
+    display: inline-flex; align-items: center; gap: 14px;
+    margin-bottom: 18px;
+  }
+  .brand svg { display: block; border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0, 40, 70, .28); }
+  .brand span { font-size: 20px; font-weight: 700; letter-spacing: .2px; }
+  header h1 { margin: 0; font-size: 30px; font-weight: 800; letter-spacing: -.4px; }
+  header p { margin: 8px 0 0; opacity: .9; font-size: 15px; }
+  main { background: #fff; margin-top: -22px; border-radius: 16px;
+    box-shadow: 0 1px 0 var(--line), 0 12px 30px rgba(20, 50, 80, .06);
+    padding: 8px 34px 38px; }
+  h2 { font-size: 20px; margin: 32px 0 8px; padding-top: 8px; }
+  h2:first-of-type { margin-top: 20px; }
+  p { margin: 12px 0; }
+  a { color: var(--blue-dark); }
+  ul { padding-left: 22px; margin: 12px 0; }
+  li { margin: 8px 0; }
+  .lede { font-size: 18px; }
+  .pill { display: inline-block; font-size: 13px; font-weight: 600;
+    color: var(--blue-dark); background: #e6f5fe; border-radius: 999px;
+    padding: 4px 12px; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 30px 0; }
+  footer { color: var(--muted); font-size: 14px; text-align: center;
+    padding-top: 26px; }
+  code { background: #eef4f8; padding: 1px 6px; border-radius: 5px; font-size: .92em; }
+  @media (max-width: 560px) {
+    main { padding: 6px 20px 30px; }
+    header h1 { font-size: 25px; }
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <svg width="48" height="48" viewBox="0 0 48 48" aria-hidden="true">
+        <rect width="48" height="48" rx="11" fill="#fff"/>
+        <path d="M13 24.5l7 7 15-16" fill="none" stroke="#03A9F4"
+              stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span>Todo for Home Assistant</span>
+    </div>
+    <h1>Privacy Policy</h1>
+    <p>Last updated: 19 June 2026</p>
+  </header>
+
+  <div class="wrap">
+  <main>
+    <h2>Summary</h2>
+    <p class="lede">
+      <span class="pill">No accounts · No tracking · No ads</span>
+    </p>
+    <p>
+      Todo for Home Assistant (&ldquo;the app&rdquo;) is a client for your own
+      Home Assistant instance. The app does <strong>not</strong> operate any
+      servers of its own, does <strong>not</strong> collect analytics, and does
+      <strong>not</strong> show ads or share data with third parties. All of your
+      data stays between your device and the Home Assistant server <strong>you</strong>
+      configure.
+    </p>
+
+    <h2>What the app stores, and where</h2>
+    <ul>
+      <li>
+        <strong>Home Assistant connection settings</strong> (host, port, SSL
+        toggle) and your <strong>authentication tokens</strong> are stored
+        <strong>only on your device</strong> — tokens in the operating system&rsquo;s
+        encrypted secure storage (Android Keystore-backed).
+      </li>
+      <li>
+        <strong>A local cache of your lists and items</strong>, and a
+        <strong>queue of pending changes</strong> made while offline, are stored
+        <strong>only on your device</strong> so the app works without a
+        connection. This cache is removed when you sign out or uninstall the app.
+      </li>
+    </ul>
+    <p>The app never transmits any of this information to the developer or to any
+      third party.</p>
+
+    <h2>Data sent over the network</h2>
+    <p>
+      The app communicates <strong>only</strong> with the Home Assistant instance
+      you configure, in order to read and modify your to-do lists. That traffic
+      goes to <strong>your</strong> server. If your Home Assistant is reachable
+      only over <code>http://</code> on your local network, the app uses cleartext
+      for that local connection; no data is sent anywhere else.
+    </p>
+
+    <h2>Authentication</h2>
+    <p>
+      Sign-in uses Home Assistant&rsquo;s own OAuth flow in a secure in-app browser
+      window. Your password is entered on your Home Assistant server&rsquo;s login
+      page and is never seen or stored by the app; the app only receives and
+      stores the resulting access token on your device.
+    </p>
+
+    <h2>Children</h2>
+    <p>
+      The app is a utility for managing to-do lists and is not directed at
+      children.
+    </p>
+
+    <h2>Your choices</h2>
+    <p>
+      You can clear all stored data at any time by signing out or uninstalling
+      the app.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions about this policy:
+      <a href="mailto:anton@adamsen.io">anton@adamsen.io</a>
+    </p>
+
+    <hr />
+    <footer>
+      Todo for Home Assistant is an independent app and is not affiliated with or
+      endorsed by the Home Assistant project or the Open Home Foundation.
+    </footer>
+  </main>
+  </div>
+</body>
+</html>
