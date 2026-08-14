@@ -19,6 +19,7 @@ neon-halo/
   icon.png              app icon, used by the app page and the landing card
   privacy/index.html            NEON HALO — privacy policy (Google Play)
   privacy/app-store/index.html  NEON HALO — privacy policy (App Store)
+  delete-data/index.html        NEON HALO — how to delete your data
 ```
 
 Each app gets its own top-level folder. Stable URLs to paste into Play Console:
@@ -28,6 +29,16 @@ Each app gets its own top-level folder. Stable URLs to paste into Play Console:
 | Todo for Home Assistant | `https://mediocre-applications.github.io/hass-todo/privacy/` |
 | NEON HALO (Google Play) | `https://mediocre-applications.github.io/neon-halo/privacy/` |
 | NEON HALO (App Store) | `https://mediocre-applications.github.io/neon-halo/privacy/app-store/` |
+
+Play Console also asks for a **Delete data URL** in the Data safety form,
+separately from the privacy policy. It has its own rules: it must name the app
+or developer as the listing shows them, put the deletion *steps* up front, and
+say what is deleted, what is kept, and for how long. A privacy policy that
+merely mentions deletion doesn't qualify.
+
+| App | Delete data URL |
+|---|---|
+| NEON HALO | `https://mediocre-applications.github.io/neon-halo/delete-data/` |
 
 An app that ships on both stores gets **one page per store**, not one shared
 page: the two stores name different things for the same feature (Play Games
