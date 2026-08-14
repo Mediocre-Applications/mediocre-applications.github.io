@@ -14,6 +14,11 @@ index.html              brand landing page (lists the apps)
 .nojekyll               serve files as-is (no Jekyll build)
 hass-todo/
   privacy/index.html    Todo for Home Assistant — privacy policy
+neon-halo/
+  index.html            NEON HALO — app page (description, support)
+  icon.png              app icon, used by the app page and the landing card
+  privacy/index.html            NEON HALO — privacy policy (Google Play)
+  privacy/app-store/index.html  NEON HALO — privacy policy (App Store)
 ```
 
 Each app gets its own top-level folder. Stable URLs to paste into Play Console:
@@ -21,6 +26,15 @@ Each app gets its own top-level folder. Stable URLs to paste into Play Console:
 | App | Privacy policy URL |
 |---|---|
 | Todo for Home Assistant | `https://mediocre-applications.github.io/hass-todo/privacy/` |
+| NEON HALO (Google Play) | `https://mediocre-applications.github.io/neon-halo/privacy/` |
+| NEON HALO (App Store) | `https://mediocre-applications.github.io/neon-halo/privacy/app-store/` |
+
+An app that ships on both stores gets **one page per store**, not one shared
+page: the two stores name different things for the same feature (Play Games
+Services vs. Game Center, Google Play Billing vs. the App Store), so a shared
+page would either read wrong on one store or fill up with "Android only"
+qualifiers. The pair is edited in step — a feature that changes one changes
+both.
 
 ## Rules
 

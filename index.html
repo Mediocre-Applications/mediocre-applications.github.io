@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Mediocre Applications</title>
-<meta name="description" content="Mediocre Applications — small, honest apps. No accounts, no tracking, no nonsense." />
+<meta name="description" content="Mediocre Applications — small, honest apps." />
 <meta name="robots" content="index, follow" />
 <style>
   :root {
@@ -42,12 +42,17 @@
     padding: 16px; border: 1px solid var(--line); border-radius: 14px;
     text-decoration: none; color: inherit; transition: box-shadow .15s ease;
   }
+  .app + .app { margin-top: 12px; }
   .app:hover { box-shadow: 0 6px 18px rgba(20, 50, 80, .08); }
   .app .icon { width: 52px; height: 52px; border-radius: 13px; flex: none;
-    display: grid; place-items: center;
+    display: grid; place-items: center; overflow: hidden;
     background: linear-gradient(135deg, #29B6F6 0%, #0288D1 100%); }
+  .app .icon img { width: 100%; height: 100%; display: block; }
   .app .body { flex: 1; min-width: 0; }
-  .app .name { font-size: 18px; font-weight: 700; }
+  .app .name, .app .desc, .app .links { display: block; }
+  .app .name { font-size: 18px; font-weight: 700; line-height: 1.3; }
+  .app .name a { color: inherit; text-decoration: none; }
+  .app .name a:hover { text-decoration: underline; }
   .app .desc { color: var(--muted); font-size: 15px; margin-top: 2px; }
   .app .links { margin-top: 6px; font-size: 14px; }
   .app .links a { color: var(--accent); text-decoration: none; }
@@ -65,15 +70,14 @@
 <body>
   <header>
     <h1>Mediocre Applications</h1>
-    <p>Small, honest apps. No accounts, no tracking, no nonsense — your data
-       stays yours.</p>
+    <p>Small, honest apps.</p>
   </header>
 
   <div class="wrap">
   <main>
     <h2>Apps</h2>
 
-    <a class="app" href="./hass-todo/privacy/">
+    <div class="app">
       <span class="icon" aria-hidden="true">
         <svg width="30" height="30" viewBox="0 0 48 48">
           <path d="M13 24.5l7 7 15-16" fill="none" stroke="#fff"
@@ -85,7 +89,21 @@
         <span class="desc">Manage your Home Assistant to-do lists, online or off.</span>
         <span class="links"><a href="./hass-todo/privacy/">Privacy policy</a></span>
       </span>
-    </a>
+    </div>
+
+    <div class="app">
+      <span class="icon" aria-hidden="true">
+        <img src="./neon-halo/icon.png" alt="" />
+      </span>
+      <span class="body">
+        <span class="name"><a href="./neon-halo/">NEON HALO: Rise of the Jumpbot 5000</a></span>
+        <span class="desc">A pixel-art endless vertical jumper. Tilt to steer; don&rsquo;t fall.</span>
+        <span class="links">
+          <a href="./neon-halo/privacy/">Privacy policy (Google Play)</a> ·
+          <a href="./neon-halo/privacy/app-store/">App Store</a>
+        </span>
+      </span>
+    </div>
   </main>
 
   <footer>
