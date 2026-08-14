@@ -15,7 +15,8 @@ index.html              brand landing page (lists the apps)
 hass-todo/
   privacy/index.html    Todo for Home Assistant — privacy policy
 neon-halo/
-  icon.png              app icon, used by the landing card and both policies
+  index.html            NEON HALO — app page (description, support)
+  icon.png              app icon, used by the app page and the landing card
   privacy/index.html            NEON HALO — privacy policy (Google Play)
   privacy/app-store/index.html  NEON HALO — privacy policy (App Store)
 ```
