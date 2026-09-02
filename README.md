@@ -14,6 +14,11 @@ index.html              brand landing page (lists the apps)
 .nojekyll               serve files as-is (no Jekyll build)
 hass-todo/
   privacy/index.html    Todo for Home Assistant — privacy policy
+minimal-launcher/
+  index.html            Mediocre Minimal Launcher — app page (screenshots, features)
+  icon.png              app icon, used by the app page and the landing card
+  screenshots/*.png     phone screenshots shown on the app page
+  privacy/index.html    Mediocre Minimal Launcher — privacy policy
 neon-halo/
   index.html            NEON HALO — app page (description, support)
   icon.png              app icon, used by the app page and the landing card
@@ -27,6 +32,7 @@ Each app gets its own top-level folder. Stable URLs to paste into Play Console:
 | App | Privacy policy URL |
 |---|---|
 | Todo for Home Assistant | `https://mediocre-applications.github.io/hass-todo/privacy/` |
+| Mediocre Minimal Launcher | `https://mediocre-applications.github.io/minimal-launcher/privacy/` |
 | NEON HALO (Google Play) | `https://mediocre-applications.github.io/neon-halo/privacy/` |
 | NEON HALO (App Store) | `https://mediocre-applications.github.io/neon-halo/privacy/app-store/` |
 
