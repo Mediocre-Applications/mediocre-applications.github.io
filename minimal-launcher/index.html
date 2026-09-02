@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mediocre Minimal Launcher</title>
+    <meta
+      name="description"
+      content="A minimal home screen launcher for Android. Pinned apps and groups, search that finds everything, widgets, gestures and icon packs. No ads, no analytics, no tracking."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#1a1a2e" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mediocre Applications" />
+    <meta property="og:url" content="https://mediocre-applications.github.io/minimal-launcher/" />
+    <meta property="og:title" content="Mediocre Minimal Launcher" />
+    <meta property="og:description" content="A minimal home screen launcher for Android. Pinned apps and groups, search that finds everything, widgets, gestures and icon packs. No ads, no analytics, no tracking." />
+    <meta property="og:image" content="https://mediocre-applications.github.io/minimal-launcher/social-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Mediocre Minimal Launcher — a minimal Android home screen"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="canonical" href="https://mediocre-applications.github.io/minimal-launcher/" />
+    <link rel="icon" type="image/png" href="./icon.png" />
+    <style>
+      :root {
+        --bg: #1a1a2e;
+        --surface: #232342;
+        --border: #33335a;
+        --text: #ececf4;
+        --muted: #9a9ab8;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        margin: 0;
+        background: var(--bg);
+        background-image: radial-gradient(
+          120% 80% at 50% -10%,
+          #2a2a52 0%,
+          var(--bg) 60%
+        );
+        color: var(--text);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      header {
+        text-align: center;
+        padding: 88px 24px 64px;
+      }
+      header img.icon {
+        width: 96px;
+        height: 96px;
+        border-radius: 22px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      }
+      header h1 {
+        font-size: 2.1rem;
+        margin: 24px 0 8px;
+        letter-spacing: -0.02em;
+      }
+      header p.tagline {
+        font-size: 1.15rem;
+        color: var(--muted);
+        margin: 0 auto;
+        max-width: 30ch;
+      }
+      header .install {
+        display: inline-block;
+        margin-top: 28px;
+        padding: 13px 28px;
+        border-radius: 999px;
+        background: var(--text);
+        color: var(--bg);
+        font-size: 1rem;
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: 0 8px 26px rgba(0, 0, 0, 0.4);
+      }
+      header .install:hover {
+        background: #fff;
+      }
+
+      section {
+        padding: 40px 0;
+      }
+      h2 {
+        font-size: 1.35rem;
+        margin: 0 0 28px;
+        letter-spacing: -0.01em;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 16px;
+      }
+      .feature {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 20px 22px;
+      }
+      .feature h3 {
+        margin: 0 0 6px;
+        font-size: 1rem;
+      }
+      .feature p {
+        margin: 0;
+        font-size: 0.92rem;
+        color: var(--muted);
+      }
+
+      .shots {
+        display: flex;
+        gap: 18px;
+        overflow-x: auto;
+        padding: 4px 4px 20px;
+        scroll-snap-type: x mandatory;
+      }
+      .shots:focus-visible {
+        outline: 2px solid var(--muted);
+        outline-offset: 6px;
+        border-radius: 22px;
+      }
+      .shots img {
+        height: 460px;
+        width: auto;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+        scroll-snap-align: center;
+        flex: 0 0 auto;
+      }
+
+      footer {
+        text-align: center;
+        padding: 56px 24px 72px;
+        border-top: 1px solid var(--border);
+        margin-top: 32px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      footer a {
+        color: var(--text);
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+      footer .links {
+        margin-bottom: 16px;
+      }
+      footer .links a {
+        margin: 0 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img
+        class="icon"
+        src="./icon.png"
+        alt="Mediocre Minimal Launcher icon"
+      />
+      <h1>Mediocre Minimal Launcher</h1>
+      <p class="tagline">
+        A minimal home screen launcher. No ads, no bloat, no distractions.
+      </p>
+      <a class="install" href="https://play.google.com/store/apps/details?id=dk.antontanderup.MediocreMinimalLauncher">Get it on Google Play</a>
+    </header>
+
+    <div class="wrap">
+      <section>
+        <h2>Screenshots</h2>
+        <div class="shots" tabindex="0" role="region" aria-label="Screenshots">
+          <img
+            src="./screenshots/01-home.png"
+            alt="Home screen"
+            width="1116"
+            height="2484"
+            decoding="async"
+          />
+          <img
+            src="./screenshots/02-home-group-open.png"
+            alt="App group open"
+            width="1116"
+            height="2484"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src="./screenshots/03-app-shortcuts.png"
+            alt="App shortcuts"
+            width="1116"
+            height="2484"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src="./screenshots/05-appearance.png"
+            alt="Appearance settings"
+            width="1116"
+            height="2484"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src="./screenshots/06-gestures.png"
+            alt="Gesture settings"
+            width="1116"
+            height="2484"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </section>
+
+      <section>
+        <h2>What it does</h2>
+        <div class="features">
+          <div class="feature">
+            <h3>Fully private</h3>
+            <p>
+              No ads. No analytics. No tracking. Everything stays on your
+              device.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Pinned apps &amp; groups</h3>
+            <p>
+              Pin the apps you actually use and organise them into named
+              groups. Long-press any of them for its shortcuts.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Search that finds everything</h3>
+            <p>
+              Apps, contacts and app shortcuts as you type — with a
+              calculator and unit conversion built in.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Calendar &amp; media cards</h3>
+            <p>
+              Today&rsquo;s events and whatever&rsquo;s playing, right on the
+              home screen — each card turns up only when there is something
+              to show. Recent apps can sit there too.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Clock, your way</h3>
+            <p>
+              Five clock styles — Default, Giant, Vivid, Flip and Analog —
+              or hand the job to any clock widget you like.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Contacts on the home screen</h3>
+            <p>
+              Pin the people you actually talk to. Call or message them in a
+              tap, or find them from search.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Gestures</h3>
+            <p>
+              Map swipes (down, left, right) and drawn gestures (circle, Z)
+              to an app, search, the notification shade, quick settings, the
+              assistant or the lock screen.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>App stats</h3>
+            <p>
+              Screen time, opens, daily averages and streaks for every app —
+              worked out on your device from Android&rsquo;s own usage data.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Icons, your way</h3>
+            <p>
+              Five icon shapes, third-party icon packs, the system
+              themed-icon layer, or a custom icon for a single app. Optional
+              notification dots.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Themes &amp; fonts</h3>
+            <p>
+              System, Light or Dark, and your pick of font throughout the
+              launcher.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Your wallpaper, showing</h3>
+            <p>
+              Turn the background transparency down to let more of your
+              wallpaper through.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Hidden apps</h3>
+            <p>
+              Long-press anything you&rsquo;d rather not look at and it
+              leaves the list. Still installed, just out of the way.
+            </p>
+          </div>
+          <div class="feature">
+            <h3>Backup &amp; restore</h3>
+            <p>
+              Save your whole setup to a file and put it back on a new
+              phone.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <div class="links">
+        <a href="https://play.google.com/store/apps/details?id=dk.antontanderup.MediocreMinimalLauncher">Google Play</a>
+        <a href="/">Mediocre Applications</a>
+        <a href="./privacy/">Privacy Policy</a>
+        <a href="mailto:anton@adamsen.io">Contact</a>
+      </div>
+      <div>&copy; 2026 Anton Tanderup Adamsen</div>
+    </footer>
+  </body>
+</html>
