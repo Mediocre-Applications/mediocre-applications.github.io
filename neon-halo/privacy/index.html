@@ -83,7 +83,7 @@
       <span>NEON HALO</span>
     </div>
     <h1>Privacy Policy — Google Play</h1>
-    <p>Last updated: 18 August 2026</p>
+    <p>Last updated: 2 September 2026</p>
     <p>Android build · <a href="./app-store/">App Store version</a></p>
   </header>
 
@@ -99,17 +99,19 @@
       published by Mediocre Applications (&ldquo;we&rdquo;, &ldquo;us&rdquo;).
       This policy explains what the game does with data. The short version:
       there is no account to create, there are no servers of ours for the game
-      to talk to, and your progress lives on your phone.
+      to talk to, and your progress lives on your phone — plus, if you opt in, a
+      copy in your own Google account.
     </p>
 
     <div class="note">
       <p>
         <strong>We operate no backend.</strong> Everything described below that
         leaves your device goes to Google (as the app store and, if you choose
-        to sign in, as the host of leaderboards, achievements and cloud saves)
-        or to Sentry (crash diagnostics). We hold no database of players, and
-        there is no server we could look you up in. NEON HALO is a paid app,
-        and there is no advertising.
+        to sign in, as the host of the leaderboard, the achievements and the
+        cloud save) or to Sentry
+        (crash diagnostics). We hold no database of players, and there is no
+        server we could look you up in. NEON HALO is a paid app, and there is
+        no advertising.
       </p>
     </div>
 
@@ -117,16 +119,21 @@
     <p>
       Your save file — best height, lifetime statistics, unlocked chassis,
       salvaged alloy, gear stash and every settings choice — is written to the
-      app&rsquo;s own private storage on your phone. It is never sent to us and
-      cannot be recovered by us if it is lost. The one place it can go is your
-      own Google account: if you choose to sign in to Google Play Games
-      Services, the game backs your save up there so your progress survives a
-      reinstall or a new phone (see section 3.3). If you never sign in, it
-      never leaves the device.
+      app&rsquo;s own private storage on your phone. It is never sent to us: we
+      operate no server it could be sent to, and we cannot recover it for you if
+      it is lost.
+    </p>
+    <p>
+      If you sign in to Google Play Games Services, a copy of your progress is
+      also kept in your own Google account so it survives a new phone. That is
+      the one exception to the paragraph above, it is optional, and section 3.3
+      describes exactly what it holds and how to delete it. Your settings are
+      not part of it.
     </p>
     <p>
       Uninstalling the game, or clearing its storage from Android&rsquo;s app
-      settings, deletes all of it permanently.
+      settings, deletes the copy on the phone permanently. The copy in your
+      Google account is deleted separately — see section 3.3.
     </p>
     <p>
       The game requests no runtime permissions. It reads the device&rsquo;s
@@ -197,34 +204,42 @@
       <a href="https://myaccount.google.com/" rel="noopener">your Google account settings</a>.
     </p>
 
-    <h3>3.3 Cloud saves (Google Play Games Services)</h3>
+    <h3>3.3 Cloud save (Play Games saved games)</h3>
     <div class="note">
       <p>
-        Applies to versions of the game that offer cloud saves, and only if you
-        sign in to Google Play Games Services. Without signing in, your save
-        file stays on your device as described in section 1.
+        Applies to versions of the game that offer the cloud save, from version
+        1.2.0 onwards. It requires the same optional sign-in as section 3.2, and
+        the game is fully playable without it.
       </p>
     </div>
     <p>
-      If you are signed in, the game backs your save file up to your Google
-      account using Play Games Services&rsquo; saved-games feature, so that
-      your progress can be restored when you reinstall the game or move to a
-      new phone. What is backed up is exactly the save file described in
-      section 1 — best height, lifetime statistics, unlocked chassis, salvaged
-      alloy, gear stash and settings. It contains nothing about you beyond
-      that.
+      If you are signed in to Google Play Games Services, the game keeps one
+      copy of your progress as a Play Games <em>saved game</em>, stored by
+      Google in your own Google account. It is what lets a reinstall, or a
+      second device, pick your climb back up.
     </p>
     <p>
-      The backup is stored by Google in storage tied to your Google account
-      and readable only by this game. It never passes through any server of
-      ours — we cannot read it, restore it for you, or delete it. It is not
-      visible to other players.
+      It holds your progress and nothing else: best height, lifetime
+      statistics, unlocked chassis and apartments, salvaged alloy, your gear
+      stash and which achievements you have earned. It deliberately does
+      <strong>not</strong> hold your settings — the tilt calibration, the
+      volumes, and your answer to the question about signing in all describe
+      this one phone and stay on it.
     </p>
     <p>
-      Deleting your Play Games data for this game (see section 6) deletes the
-      cloud save along with it. Uninstalling the game or clearing its storage
-      removes only the copy on your device — the cloud copy remains in your
-      Google account until you delete it there.
+      We never see it. It is written by the game on your device, straight to
+      Google, and read back the same way; there is no server of ours in between
+      and no copy of it anywhere we could look at. It is not shared with other
+      players and does not appear on your public profile.
+    </p>
+    <p>
+      You can delete it at any time from the Google Play Games app — open the
+      game&rsquo;s page there and delete its saved game — or by deleting the
+      game&rsquo;s Play Games data from
+      <a href="https://myaccount.google.com/" rel="noopener">your Google account settings</a>,
+      which removes it along with your scores and achievements. Deleting it does
+      not touch the save on your phone, and signing out stops the game using it
+      at all.
     </p>
 
     <h2>4. What we never collect</h2>
@@ -270,9 +285,9 @@
             <td>Delete the game&rsquo;s Play Games data in your Google account</td>
           </tr>
           <tr>
-            <td>Cloud save (only if you signed in)</td>
-            <td>Your Google account, via Google Play Games Services</td>
-            <td>Delete the game&rsquo;s Play Games data in your Google account</td>
+            <td>Cloud save (your progress, not your settings)</td>
+            <td>Your own Google account, via Play Games saved games</td>
+            <td>Delete the saved game in the Play Games app, or delete the game&rsquo;s Play Games data in your Google account</td>
           </tr>
           <tr>
             <td>Purchase record for the game itself</td>
@@ -313,7 +328,6 @@
     <hr />
     <footer>
       <a href="/">Mediocre Applications</a> · <a href="../">NEON HALO</a> ·
-      <a href="../delete-data/">Delete your data</a> ·
       <a href="./app-store/">App Store version of this policy</a>
     </footer>
   </main>

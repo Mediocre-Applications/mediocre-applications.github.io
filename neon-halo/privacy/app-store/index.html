@@ -83,7 +83,7 @@
       <span>NEON HALO</span>
     </div>
     <h1>Privacy Policy — App Store</h1>
-    <p>Last updated: 14 August 2026</p>
+    <p>Last updated: 2 September 2026</p>
     <p>iOS build · <a href="../">Google Play version</a></p>
   </header>
 
@@ -99,14 +99,16 @@
       published by Mediocre Applications (&ldquo;we&rdquo;, &ldquo;us&rdquo;).
       This policy explains what the game does with data. The short version:
       there is no account to create, there are no servers of ours for the game
-      to talk to, and your progress lives on your phone.
+      to talk to, and your progress lives on your phone — plus, if you opt in, a
+      copy in your own Apple account.
     </p>
 
     <div class="note">
       <p>
         <strong>We operate no backend.</strong> Everything described below that
         leaves your device goes to Apple (as the app store and, if you choose
-        to sign in, as the leaderboard and achievements host) or to Sentry
+        to sign in, as the host of the leaderboard, the achievements and the
+        cloud save) or to Sentry
         (crash diagnostics). We hold no database of players, and there is no
         server we could look you up in. NEON HALO is a paid app, and there is
         no advertising.
@@ -117,13 +119,21 @@
     <p>
       Your save file — best height, lifetime statistics, unlocked chassis,
       salvaged alloy, gear stash and every settings choice — is written to the
-      app&rsquo;s own private storage on your phone and never transmitted
-      anywhere. It is not backed up to us, it is not synced between devices,
-      and it cannot be recovered by us if it is lost.
+      app&rsquo;s own private storage on your phone. It is never sent to us: we
+      operate no server it could be sent to, and we cannot recover it for you if
+      it is lost.
+    </p>
+    <p>
+      If you sign in to Game Center, a copy of your progress is also kept in
+      your own iCloud account so it survives a new phone. That is the one
+      exception to the paragraph above, it is optional, and section 3.3
+      describes exactly what it holds and how to delete it. Your settings are
+      not part of it.
     </p>
     <p>
       Uninstalling the game, or offloading it from iOS&rsquo;s app settings,
-      deletes all of it permanently.
+      deletes the copy on the phone permanently. The copy in your iCloud
+      account is deleted separately — see section 3.3.
     </p>
     <p>
       The game requests no runtime permissions. It reads the device&rsquo;s
@@ -194,6 +204,44 @@
       <em>Settings → [your name] → Game Center</em> on your device.
     </p>
 
+    <h3>3.3 Cloud save (Game Center saved games)</h3>
+    <div class="note">
+      <p>
+        Applies to versions of the game that offer the cloud save. It requires
+        the same optional sign-in as section 3.2, plus an iCloud account, and
+        the game is fully playable without either.
+      </p>
+    </div>
+    <p>
+      If you are signed in to Game Center, the game keeps one copy of your
+      progress as a Game Center <em>saved game</em>, stored by Apple in your own
+      iCloud account. It is what lets a reinstall, or a second device, pick your
+      climb back up. If you are not signed in to iCloud there is nowhere to keep
+      it, and the game simply carries on playing off the save on your phone.
+    </p>
+    <p>
+      It holds your progress and nothing else: best height, lifetime
+      statistics, unlocked chassis and apartments, salvaged alloy, your gear
+      stash and which achievements you have earned. It deliberately does
+      <strong>not</strong> hold your settings — the tilt calibration, the
+      volumes, and your answer to the question about signing in all describe
+      this one phone and stay on it.
+    </p>
+    <p>
+      We never see it. It is written by the game on your device, straight to
+      Apple, and read back the same way; there is no server of ours in between
+      and no copy of it anywhere we could look at. It is not shared with other
+      players and does not appear on your public profile. It counts against your
+      own iCloud storage.
+    </p>
+    <p>
+      You can delete it at any time from Settings → [your name] → iCloud →
+      Manage Account Storage on your device, or by deleting the game&rsquo;s
+      Game Center data from Settings → [your name] → Game Center, which removes
+      it along with your scores and achievements. Deleting it does not touch the
+      save on your phone, and signing out stops the game using it at all.
+    </p>
+
     <h2>4. What we never collect</h2>
     <p>
       The game does not ask for and does not collect your name, email address,
@@ -235,6 +283,11 @@
             <td>Leaderboard score, nickname and unlocked achievements</td>
             <td>Apple Game Center</td>
             <td>Delete the game&rsquo;s Game Center data in your Apple ID account</td>
+          </tr>
+          <tr>
+            <td>Cloud save (your progress, not your settings)</td>
+            <td>Your own iCloud account, via Game Center saved games</td>
+            <td>Delete it in iCloud storage settings, or delete the game&rsquo;s Game Center data in your Apple ID account</td>
           </tr>
           <tr>
             <td>Purchase record for the game itself</td>
