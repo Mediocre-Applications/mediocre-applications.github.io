@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Delete your data — NEON HALO: Rise of the Jumpbot 5000</title>
-<meta name="description" content="How to delete your data from NEON HALO: Rise of the Jumpbot 5000, by Mediocre Applications. What is deleted, what is kept, and how long anything is retained." />
+<meta name="description" content="How to delete your data from the iOS build of NEON HALO: Rise of the Jumpbot 5000, by Mediocre Applications. What is deleted, what is kept, and how long anything is retained." />
 <meta name="robots" content="index, follow" />
 <style>
   :root {
@@ -80,13 +80,13 @@
 <body>
   <header>
     <div class="brand">
-      <img src="../icon.png" alt="" />
+      <img src="../../icon.png" alt="" />
       <span>NEON HALO</span>
     </div>
     <h1>Delete your data</h1>
     <p>NEON HALO: Rise of the Jumpbot 5000, by Mediocre Applications</p>
-    <p>Last updated: 3 September 2026 · <a href="../privacy/">Privacy policy</a></p>
-    <p>Android build · <a href="./app-store/">iOS version</a></p>
+    <p>Last updated: 3 September 2026 · <a href="../../privacy/app-store/">Privacy policy</a></p>
+    <p>iOS build · <a href="../">Android version</a></p>
   </header>
 
   <div class="wrap">
@@ -103,60 +103,80 @@
       <p class="who">You can do this yourself · takes effect immediately</p>
       <p>
         Everything the game remembers — best height, lifetime statistics,
-        unlocked chassis, salvaged alloy, gear stash, settings — is stored only
-        in the app&rsquo;s private storage on your device. Deleting it is
+        unlocked chassis, salvaged alloy, gear stash, settings — is stored in
+        the app&rsquo;s private storage on your device. Deleting it is
         immediate and needs no request:
       </p>
       <ol>
-        <li><strong>Uninstall the game</strong>, or</li>
         <li>
-          open <strong>Settings → Apps → NEON HALO → Storage</strong> on your
-          Android device and tap <strong>Clear storage</strong>.
+          Open <strong>Settings → General → iPhone Storage → NEON HALO</strong>
+          and tap <strong>Delete App</strong>, or
+        </li>
+        <li>
+          hold the game&rsquo;s icon on the Home Screen and choose
+          <strong>Remove App → Delete App</strong>.
         </li>
       </ol>
       <p>
-        Either removes all of it permanently. We hold no copy — it was never
-        sent to us, so there is nothing on our side to delete and nothing we
-        could restore.
+        <strong>Offloading the app is not the same thing.</strong> iOS offers
+        <em>Offload App</em> right beside <em>Delete App</em>, and it
+        deliberately keeps the app&rsquo;s data so that reinstalling picks up
+        where you left off. Only Delete App removes your save.
       </p>
       <p>
-        If you signed in to Google Play Games, a cloud backup of the same save
-        may also exist in your Google account. Uninstalling does not touch it —
-        delete it with Step 2 below.
+        Deleting removes it permanently. We hold no copy — it was never sent to
+        us, so there is nothing on our side to delete and nothing we could
+        restore.
+      </p>
+      <p>
+        If you signed in to Game Center, a copy of your progress may also exist
+        in your iCloud account. Deleting the app does not touch it — remove it
+        with Step 2 below.
       </p>
     </div>
 
-    <h2>Step 2 — Leaderboard score, gamertag, achievements and cloud save</h2>
+    <h2>Step 2 — Leaderboard score, nickname, achievements and cloud save</h2>
     <div class="step">
-      <p class="who">Only if you signed in to Google Play Games · you can do this yourself</p>
+      <p class="who">Only if you signed in to Game Center · you can do this yourself</p>
       <p>
-        Signing in to Google Play Games Services is optional, and most of this
-        section does not apply if you declined. If you did sign in, your best
-        height, your Play Games gamertag, your unlocked achievements and the
-        cloud backup of your save file are held <strong>by Google</strong>,
-        not by us. Delete them through your Google account:
+        Signing in to Game Center is optional, and none of this section applies
+        if you declined. If you did sign in, your best height, your Game Center
+        nickname, your unlocked achievements and the cloud copy of your save
+        are held <strong>by Apple</strong>, not by us.
+      </p>
+      <p>
+        <strong>The cloud save is filed in your iCloud account</strong>, which
+        is where you delete it:
       </p>
       <ol>
-        <li>Open the <strong>Google Play Games</strong> app.</li>
-        <li>Go to <strong>More → Settings</strong>.</li>
         <li>
-          Choose <strong>Delete Play Games account and data</strong>, then pick
-          <strong>NEON HALO</strong> to delete this game&rsquo;s data only —
-          or delete your whole Play Games profile.
+          Open <strong>Settings</strong> and tap <strong>[your name]</strong>
+          at the top.
+        </li>
+        <li>Go to <strong>iCloud → Manage Account Storage</strong>.</li>
+        <li>
+          Pick <strong>NEON HALO</strong> from the list and choose
+          <strong>Delete Documents &amp; Data</strong>.
         </li>
       </ol>
       <p>
-        The same controls are at
-        <a href="https://myaccount.google.com/" rel="noopener">myaccount.google.com</a>.
-        We cannot delete this for you: we never receive your email address,
-        your real name or your Google account identifier, only the opaque
-        per-game player ID Google issues, so we have no way to find or remove
-        your entry.
+        That removes it from every device signed in to the same Apple Account.
+        It does not touch the save on the phone — Step 1 does that — and
+        signing out of Game Center stops the game using the cloud copy at all.
       </p>
       <p>
-        On iOS the equivalent is Game Center, and the routes differ enough to
-        be worth their own page — see
-        <a href="./app-store/">delete your data (iOS)</a>.
+        Your <strong>Game Center profile itself</strong> — the nickname, and
+        whether your scores and achievements are visible to other players — is
+        under <strong>Settings → [your name] → Game Center</strong>. To ask
+        Apple to erase the data it holds against your Apple Account, use
+        Apple&rsquo;s
+        <a href="https://privacy.apple.com/" rel="noopener">Data and Privacy</a>
+        portal.
+      </p>
+      <p>
+        We cannot delete any of this for you: we never receive your email
+        address, your real name or your Apple Account, only the opaque per-game
+        player ID Apple issues, so we have no way to find or remove your entry.
       </p>
     </div>
 
@@ -205,20 +225,20 @@
           <tr>
             <td>Save file, statistics and settings</td>
             <td>Your device</td>
-            <td>Step 1 — uninstall or clear storage</td>
+            <td>Step 1 — delete the app (offloading keeps it)</td>
             <td>Deleted immediately; never held by us</td>
           </tr>
           <tr>
-            <td>Leaderboard score, gamertag, achievements</td>
-            <td>Google Play Games Services</td>
-            <td>Step 2 — your Google account</td>
-            <td>Kept by Google until you delete it; we cannot</td>
+            <td>Leaderboard score, nickname, achievements</td>
+            <td>Apple Game Center</td>
+            <td>Step 2 — Game Center settings, or Apple&rsquo;s Data and Privacy portal</td>
+            <td>Kept by Apple until you delete it; we cannot</td>
           </tr>
           <tr>
-            <td>Cloud backup of the save file (only if you signed in)</td>
-            <td>Your Google account, via Google Play Games Services</td>
-            <td>Step 2 — your Google account</td>
-            <td>Kept by Google until you delete it; we cannot</td>
+            <td>Cloud save — your progress, not your settings (only if you signed in)</td>
+            <td>Your own iCloud account, via Game Center saved games</td>
+            <td>Step 2 — iCloud storage settings</td>
+            <td>Kept by Apple until you delete it; we cannot</td>
           </tr>
           <tr>
             <td>Crash reports (error, device model, OS version, app version)</td>
@@ -228,9 +248,9 @@
           </tr>
           <tr>
             <td>Purchase record for the game</td>
-            <td>Google Play</td>
-            <td>Not deletable — Google keeps it as a record of sale</td>
-            <td>Per Google&rsquo;s retention, in your Google Play account</td>
+            <td>Apple App Store</td>
+            <td>Not deletable — Apple keeps it as a record of sale</td>
+            <td>Per Apple&rsquo;s retention, in your Apple Account</td>
           </tr>
         </tbody>
       </table>
@@ -247,13 +267,13 @@
     <p>
       Mediocre Applications — <a href="mailto:anton@adamsen.io">anton@adamsen.io</a>.
       Full detail on what the game does with data is in the
-      <a href="../privacy/">privacy policy</a>.
+      <a href="../../privacy/app-store/">privacy policy</a>.
     </p>
 
     <hr />
     <footer>
-      <a href="/">Mediocre Applications</a> · <a href="../">NEON HALO</a> ·
-      <a href="../privacy/">Privacy policy</a>
+      <a href="/">Mediocre Applications</a> · <a href="../../">NEON HALO</a> ·
+      <a href="../../privacy/app-store/">Privacy policy</a>
     </footer>
   </main>
   </div>
