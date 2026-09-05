@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NEON HALO: Rise of the Jumpbot 5000</title>
-<meta name="description" content="A pixel-art endless vertical jumper for Android. Tilt to steer a scavenged mech out of the sodium rain and up through eight skies. Paid once, no ads, plays offline." />
+<meta name="description" content="A pixel-art endless vertical jumper for Android. Tilt to steer, climb as high as you can. Paid once, no ads, works offline." />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#03060c" />
 <link rel="icon" href="./icon.png" />
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Mediocre Applications" />
 <meta property="og:title" content="NEON HALO: Rise of the Jumpbot 5000" />
-<meta property="og:description" content="Tilt. Jump. Ascend. A pixel-art endless vertical jumper for Android — out of the sodium rain, past the last roof in the city, into the dark." />
+<meta property="og:description" content="Tilt. Jump. Ascend. A pixel-art endless vertical jumper for Android." />
 <meta property="og:url" content="https://mediocre-applications.github.io/neon-halo/" />
 <meta property="og:image" content="https://mediocre-applications.github.io/neon-halo/media/social-card.png" />
 <meta property="og:image:width" content="1024" />
@@ -28,13 +28,8 @@
 <link rel="preload" href="./media/fonts/vt323-400.woff2" as="font" type="font/woff2" crossorigin />
 
 <style>
-/* ---------------------------------------------------------------------------
-   The palette, the two faces and the zero corner radius are lifted from the
-   game's own src/ui/theme.ts, so this page and the app's menus are the same
-   surface. Three colours emit light and nothing else does: cyan is the machine
-   talking, magenta is the city advertising at you, amber is sodium light and
-   warnings.
---------------------------------------------------------------------------- */
+/* Palette, typefaces and zero corner radius come from the game's own
+   src/ui/theme.ts. Keep them in step. */
 @font-face { font-family: Silkscreen; src: url(./media/fonts/silkscreen-400.woff2) format("woff2");
   font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: Silkscreen; src: url(./media/fonts/silkscreen-700.woff2) format("woff2");
@@ -74,13 +69,12 @@ body {
   letter-spacing: .01em;
 }
 
-/* height:auto everywhere, so the width/height attributes only ever reserve the
-   aspect ratio and never fight a CSS width. */
+/* height:auto, so the width/height attributes reserve the aspect ratio without
+   fighting a CSS width. */
 img { max-width: 100%; height: auto; display: block; }
 a { color: var(--cyan); }
 
-/* Pixel art is only ever shown at 1x or a whole multiple of it, so nearest
-   neighbour is the correct filter and blurring would be the bug. */
+/* Only used where the source is shown at 1x or a whole multiple of it. */
 .px { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 h1, h2, h3, .display { font-family: var(--display); font-weight: 700; line-height: 1.25;
@@ -88,8 +82,6 @@ h1, h2, h3, .display { font-family: var(--display); font-weight: 700; line-heigh
 
 .wrap { max-width: var(--col); margin: 0 auto; padding: 0 var(--gutter); }
 
-/* A lit thing glows in its own colour. RN's text shadow does this in the app;
-   here it is the same trick. */
 .lit-cyan { color: var(--cyan); text-shadow: 0 0 10px rgba(99, 242, 255, .55); }
 .lit-magenta { color: var(--magenta); text-shadow: 0 0 10px rgba(255, 46, 136, .5); }
 .lit-amber { color: var(--amber); text-shadow: 0 0 10px rgba(255, 171, 61, .45); }
@@ -139,13 +131,11 @@ h1, h2, h3, .display { font-family: var(--display); font-weight: 700; line-heigh
   background-size: 360px auto;
   image-rendering: pixelated;
   opacity: .6;
-  /* dissolve the top of the tiled plate into the CSS sky so the repeat has no
-     visible seam and no second horizon */
+  /* dissolves into the CSS sky, so the repeat has no seam and no second horizon */
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 52%, #000 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, #000 52%, #000 100%);
 }
-/* The city has to stay behind the words. Menus in the app get this for free -
-   they sit on a panel; a full-bleed hero has to lay the dark down itself. */
+/* Keeps the city behind the words; the hero has no panel to sit on. */
 .hero-scrim {
   position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background:
@@ -277,8 +267,7 @@ h1, h2, h3, .display { font-family: var(--display); font-weight: 700; line-heigh
 section { position: relative; }
 .band { padding: clamp(72px, 11vw, 132px) 0; background: var(--bg); }
 .band + .band { border-top: 1px solid rgba(23, 48, 73, .55); }
-/* The same faint grid the app draws under every menu, so a band is a surface
-   rather than a hole. */
+/* The faint grid the app draws under every menu. */
 .band::before {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background-image:
@@ -294,7 +283,6 @@ section { position: relative; }
   color: var(--magenta); text-transform: uppercase; margin: 0 0 16px; }
 h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 0 20px; }
 .head-sub { font-size: clamp(20px, 2.2vw, 24px); color: var(--dim); max-width: 34em; margin: 0; }
-.head-sub em { color: var(--text); font-style: normal; }
 
 /* -- panels ---------------------------------------------------------------- */
 
@@ -339,20 +327,17 @@ h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 
 }
 .zone-no { font-family: var(--display); font-size: 10px; letter-spacing: .22em;
   color: var(--line-bright); }
-.zone h3 { font-size: clamp(19px, 3.2vw, 26px); letter-spacing: .07em; margin: 8px 0 4px; }
+.zone h3 { font-size: clamp(22px, 3.8vw, 32px); letter-spacing: .07em; margin: 8px 0 6px; }
 .zone .alt { font-family: var(--display); font-size: 12px; letter-spacing: .16em;
-  color: var(--amber); margin-bottom: 12px; }
-.zone p { margin: 0; color: var(--dim); font-size: 20px; max-width: 33em; }
+  color: var(--amber); margin: 0; }
 
 .ascent-foot { margin-top: 46px; border-top: 1px dashed var(--line); padding-top: 26px;
   color: var(--dim); font-size: 20px; max-width: 40em; }
-.ascent-foot strong { color: var(--text); font-weight: 400; }
 
 /* -- gallery --------------------------------------------------------------- */
 
-/* Full-bleed scroller whose first card still lines up with the content column.
-   Padding rather than a negative margin: a negative margin on a full-width
-   element is 44px of horizontal page overflow on every screen. */
+/* Full-bleed scroller whose first card lines up with the content column.
+   Padding, not a negative margin - that overflows the page by the gutter. */
 .gallery { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
   padding: 46px max(var(--gutter), calc((100% - var(--col)) / 2 + var(--gutter))) 20px;
   scrollbar-width: thin; scrollbar-color: var(--line-bright) transparent; }
@@ -362,9 +347,8 @@ h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 
 .shot .frame::after { content: ""; position: absolute; inset: 5px; pointer-events: none;
   background: repeating-linear-gradient(to bottom,
     rgba(0, 0, 0, .22) 0 1px, rgba(0, 0, 0, 0) 1px 3px); }
-.shot figcaption { font-family: var(--display); font-size: 10px; letter-spacing: .18em;
-  color: var(--dim); margin-top: 14px; }
-.shot figcaption b { color: var(--cyan-dim); font-weight: 400; display: block; margin-bottom: 5px; }
+.shot figcaption { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
+  color: var(--cyan-dim); margin-top: 14px; }
 .scroll-hint { font-family: var(--display); font-size: 10px; letter-spacing: .2em;
   color: var(--line-bright); margin: 18px 0 0; }
 
@@ -388,8 +372,7 @@ h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 
 }
 .rack i.locked { filter: brightness(0) saturate(0) opacity(.42); }
 
-.alloy-line { display: flex; align-items: center; gap: 12px; margin: 0 0 20px; height: 40px;
-  font-family: var(--display); font-size: 13px; letter-spacing: .14em; color: var(--amber); }
+.alloy-line { display: flex; align-items: flex-end; margin: 0 0 20px; height: 51px; }
 .alloy-line img { width: 36px; animation: drift 3s ease-in-out infinite; }
 
 /* -- the promise ----------------------------------------------------------- */
@@ -446,11 +429,11 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
 @media (min-width: 900px) {
   .ascent-grid { grid-template-columns: 360px 1fr; }
 
-  /* The climb becomes what it is in the game: one window that never cuts,
-     with the sky changing behind it while the text scrolls past. */
-  .viewer { display: block; position: sticky; top: 50%; transform: translateY(-50%);
-    width: 360px; }
-  .viewer-frame { position: relative; width: 360px; aspect-ratio: 360 / 640;
+  /* One window that never cuts, with the sky changing behind it. */
+  .viewer { --plate: min(360px, calc((100vh - 130px) * .5625));
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    position: sticky; top: 0; height: 100vh; }
+  .viewer-frame { position: relative; width: var(--plate); aspect-ratio: 360 / 640;
     border: 1px solid var(--line-bright); background: #000; overflow: hidden;
     box-shadow: 0 0 48px rgba(0, 0, 0, .85); }
   .viewer-frame .plate { position: absolute; inset: 0; background-size: cover;
@@ -466,12 +449,19 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
     color: var(--cyan-dim); margin-bottom: 6px; }
   .viewer-readout .val { font-size: 22px; letter-spacing: .08em; color: var(--cyan);
     text-shadow: 0 0 12px rgba(99, 242, 255, .7); }
-  .viewer-rail { display: flex; gap: 5px; margin-top: 14px; }
+  .viewer-rail { display: flex; gap: 5px; margin-top: 14px; width: var(--plate); }
   .viewer-rail i { flex: 1; height: 3px; background: var(--line); transition: background .4s ease; }
   .viewer-rail i.on { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
 
-  .zone { padding: 0 0 min(30vh, 240px); }
+  .hold { grid-template-columns: repeat(2, 1fr); }
+
+  .zone { padding: 0 0 min(22vh, 190px); }
   .zone-plate { display: none; }
+
+  /* The list lights up level with the sky on the glass. */
+  .zone h3, .zone .alt, .zone .zone-no { transition: color .5s ease, text-shadow .5s ease; }
+  .zone.dim h3 { color: #24506e; text-shadow: none; }
+  .zone.dim .alt, .zone.dim .zone-no { color: #1d3c55; }
   .shot { width: 290px; }
 }
 
@@ -521,10 +511,9 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
     <p class="tagline">Tilt. Jump. Ascend.</p>
 
     <p class="lede">
-      A scavenged mech bounces whether you like it or not. Your only job is to
-      <b>aim</b> it &mdash; tilt the phone and steer it up an endless column of
-      platforms, out of the sodium rain, past the last roof in the city, and into
-      the dark. Fall off the bottom and the run is over.
+      Your mech bounces on its own. All you do is <b>aim</b> it &mdash; tilt the
+      phone to steer up an endless column of platforms. Fall off the bottom and
+      the run&rsquo;s over.
     </p>
 
     <div class="cta-row">
@@ -560,12 +549,9 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
   <section class="band" id="rules">
     <div class="wrap">
       <div class="reveal">
-        <p class="kicker">01 &mdash; Standing order</p>
+        <p class="kicker">01 // How it plays</p>
         <h2 class="head lit-cyan">Three rules, and that&rsquo;s the game.</h2>
-        <p class="head-sub">
-          No tutorial, no menus between you and a run. Press START RUN and the
-          countdown is already going.
-        </p>
+        <p class="head-sub">No tutorial. Press start and go.</p>
       </div>
 
       <div class="rules">
@@ -576,9 +562,8 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
           </div>
           <h3 class="lit-cyan">NO JUMP BUTTON</h3>
           <p>
-            The bounce is automatic. Tilt the phone to pick where it lands &mdash;
-            or turn on STEER&nbsp;BY&nbsp;TOUCH and drag with a thumb instead.
-            Sensitivity, dead zone and calibration are all yours to set.
+            The bounce is automatic. Tilt to aim it, or switch to touch controls
+            and drag with a thumb. Sensitivity and dead zone are yours to set.
           </p>
         </div>
 
@@ -589,9 +574,8 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
           </div>
           <h3 class="lit-magenta">LAND ON ITS HEAD</h3>
           <p>
-            Hostile machines hover in the lane, each one built for the sky
-            it&rsquo;s in. Come down on top of one and it bursts into flying
-            alloy. Come down anywhere else on it and you don&rsquo;t.
+            Machines hover in your way. Come down on top of one and it bursts
+            into scrap. Hit it any other way and the run ends.
           </p>
         </div>
 
@@ -602,9 +586,8 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
           </div>
           <h3 class="lit-amber">THERE IS NO TOP</h3>
           <p>
-            One failure mode: the bottom of the screen. Everything above you is
-            generated as you climb, gravity eases as the air thins, and the
-            column does not run out.
+            The column is built as you climb and it doesn&rsquo;t run out. The
+            only way to lose is the bottom of the screen.
           </p>
         </div>
       </div>
@@ -615,15 +598,9 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
   <section class="band ascent" id="ascent">
     <div class="wrap">
       <div class="reveal">
-        <p class="kicker">02 &mdash; The ascent</p>
-        <h2 class="head lit-cyan">One climb. Eight skies. No cuts.</h2>
-        <p class="head-sub">
-          There are no levels and no loading screens. The sky blends from one
-          place into the next while you&rsquo;re mid-bounce, and the music,
-          the machines and the platforms change with it.
-          <em>Above the atmosphere it stops even doing that</em> &mdash; each pair
-          of skies is separated by half a zone of nothing but stars.
-        </p>
+        <p class="kicker">02 // The climb</p>
+        <h2 class="head lit-cyan">Eight skies, one climb.</h2>
+        <p class="head-sub">No levels, no loading screens. It just keeps changing.</p>
       </div>
 
       <div class="ascent-grid">
@@ -653,12 +630,7 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
             <div class="zone-plate px" style="background-image:url(./media/zone-01-sprawl.png)"></div>
             <span class="zone-no">ZONE 01</span>
             <h3 class="lit-amber">THE SPRAWL</h3>
-            <p class="alt">0 M &mdash; STREET LEVEL</p>
-            <p>
-              Permanent night. Sodium haze, refinery flares burning off somewhere
-              behind the tenements, and rain coming in sideways. Every run opens
-              down here, standing on a manhole cover.
-            </p>
+            <p class="alt">0 M</p>
           </li>
 
           <li class="zone reveal" data-zone="1" data-alt="3,180 M">
@@ -666,11 +638,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
             <span class="zone-no">ZONE 02</span>
             <h3 class="lit-cyan">SKYLINE</h3>
             <p class="alt">3,180 M</p>
-            <p>
-              Up between the lit windows of derelict corporate towers, with
-              spinner traffic threading the lanes between them and an ad blimp
-              holding station over the canyon.
-            </p>
           </li>
 
           <li class="zone reveal" data-zone="2" data-alt="7,020 M">
@@ -678,11 +645,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
             <span class="zone-no">ZONE 03</span>
             <h3 class="lit-magenta">OPEN SKY</h3>
             <p class="alt">7,020 M</p>
-            <p>
-              Out of the smog at last. The final arcology crown goes past below
-              you, the colour comes back into the air, and for a while there is
-              nothing up here but cloud.
-            </p>
           </li>
 
           <li class="zone reveal" data-zone="3" data-alt="11,340 M">
@@ -690,11 +652,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
             <span class="zone-no">ZONE 04</span>
             <h3 class="lit-cyan">ORBIT</h3>
             <p class="alt">11,340 M</p>
-            <p>
-              Past the stratosphere and into the cold quiet. Gravity eases off,
-              platforms get sparser and stranger, and the dark is properly dark
-              for the first time.
-            </p>
           </li>
 
           <li class="zone reveal" data-zone="4" data-alt="15,480 M">
@@ -702,11 +659,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
             <span class="zone-no">ZONE 05</span>
             <h3 class="lit-amber">SHIPBREAK</h3>
             <p class="alt">15,480 M</p>
-            <p>
-              The breaking yards, where the off-world liners are cut up. Hull
-              sections, cutting torches, and an accommodation block with one
-              lifepod nobody took.
-            </p>
           </li>
 
           <li class="zone reveal" data-zone="5" data-alt="19,320 M">
@@ -714,11 +666,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
             <span class="zone-no">ZONE 06</span>
             <h3 class="lit-cyan">THE EXPANSE</h3>
             <p class="alt">19,320 M</p>
-            <p>
-              The long dark. Searchlights from installations you never actually
-              see rake a volume of dust, and the only thing that reads as scale
-              is the beam itself.
-            </p>
           </li>
 
           <li class="zone reveal" data-zone="6" data-alt="23,490 M">
@@ -726,34 +673,21 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
             <span class="zone-no">ZONE 07</span>
             <h3 class="lit-amber">ASTEROID FIELD</h3>
             <p class="alt">23,490 M</p>
-            <p>
-              Dead rock, tumbling. Most of it is nothing; some of it is
-              ore-bearing and worth going round the outside of, which is the
-              only reason anyone would.
-            </p>
           </li>
 
           <li class="zone reveal" data-zone="7" data-alt="27,450 M">
             <div class="zone-plate px" style="background-image:url(./media/zone-08-halo.png)"></div>
             <span class="zone-no">ZONE 08</span>
             <h3 class="lit-magenta">NEON HALO</h3>
-            <p class="alt">27,450 M &mdash; THE TITLE</p>
-            <p>
-              A ring habitat turning slowly over the top of the climb: a lit deck
-              running unbroken round the inside of it, a whole city hanging off
-              that deck toward the axis. It never repeats and it never goes past
-              you. You do not reach it.
-            </p>
+            <p class="alt">27,450 M</p>
           </li>
         </ol>
       </div>
 
       <p class="ascent-foot reveal">
-        <strong>And it isn&rsquo;t all rolled.</strong> Scattered through the
-        column are authored places &mdash; a forced zig-zag through spinner
-        traffic, a noodle bar hovering over the street, a service shaft between
-        two towers, a liner mid-dismantling, a searchlight battery you climb the
-        funnel of. Each one appears at most once per sky, per run.
+        Not all of it is generated. There are hand-built stretches in there too
+        &mdash; a zig-zag through traffic, a noodle bar over the street, a liner
+        being cut in half. You won&rsquo;t meet them all in one run.
       </p>
     </div>
   </section>
@@ -761,39 +695,35 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
   <!-- ---------------------------------------------------------- gallery -->
   <section class="band">
     <div class="wrap reveal">
-      <p class="kicker">03 &mdash; On the glass</p>
-      <h2 class="head lit-cyan">Every frame drawn by the game itself.</h2>
-      <p class="head-sub">
-        Real, unretouched frames from the shipped build &mdash; the same one on
-        the Play Store. Nothing here is a mock-up.
-      </p>
-      <p class="scroll-hint">&larr; drag the row &rarr;</p>
+      <p class="kicker">03 // Screenshots</p>
+      <h2 class="head lit-cyan">Screenshots.</h2>
+      <p class="scroll-hint">&larr; drag &rarr;</p>
     </div>
 
     <div class="gallery">
       <figure class="shot">
         <div class="frame"><img src="./media/shot-01-sprawl.png"
-          alt="Gameplay in THE SPRAWL: the mech mid-bounce between tenement ledges under sodium light and rain."
+          alt="Climbing between tenement ledges in the rain."
           width="720" height="1440" loading="lazy" /></div>
-        <figcaption><b>THE SPRAWL</b>Where the rain never stops</figcaption>
+        <figcaption>THE SPRAWL</figcaption>
       </figure>
       <figure class="shot">
         <div class="frame"><img src="./media/shot-02-crowns.png"
-          alt="Gameplay above the city: the mech beside the crown of the last arcology tower as the sky turns pink."
+          alt="Level with the crown of the last tower as the sky opens up."
           width="720" height="1440" loading="lazy" /></div>
-        <figcaption><b>OPEN SKY</b>The last roof, going past</figcaption>
+        <figcaption>OPEN SKY</figcaption>
       </figure>
       <figure class="shot">
         <div class="frame"><img src="./media/shot-03-shipbreak.png"
-          alt="Gameplay in SHIPBREAK: hull sections of a dismantled liner, cutting sparks and alloy in the lane."
+          alt="Climbing through the hull sections of a liner being cut up."
           width="720" height="1440" loading="lazy" /></div>
-        <figcaption><b>SHIPBREAK</b>Somebody else&rsquo;s ship</figcaption>
+        <figcaption>SHIPBREAK</figcaption>
       </figure>
       <figure class="shot">
         <div class="frame"><img src="./media/shot-04-halo.png"
-          alt="Gameplay in NEON HALO: the lit ring habitat turning on the horizon beside the climbing mech."
+          alt="The ring habitat turning on the horizon at the top of the climb."
           width="720" height="1440" loading="lazy" /></div>
-        <figcaption><b>NEON HALO</b>Close, and never closer</figcaption>
+        <figcaption>NEON HALO</figcaption>
       </figure>
     </div>
   </section>
@@ -802,23 +732,20 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
   <section class="band">
     <div class="wrap">
       <div class="reveal">
-        <p class="kicker">04 &mdash; The hold</p>
-        <h2 class="head lit-cyan">What a climb pays you back.</h2>
-        <p class="head-sub">
-          Everything you keep is bought with ALLOY, and alloy is salvaged rather
-          than sold. There is nothing on this screen you can pay real money for.
-        </p>
+        <p class="kicker">04 // What you keep</p>
+        <h2 class="head lit-cyan">Alloy buys everything here.</h2>
+        <p class="head-sub">None of it costs real money.</p>
       </div>
 
       <div class="hold">
         <div class="panel reveal">
           <span class="idx">CURRENCY</span>
-          <p class="alloy-line"><img class="px" src="./media/alloy.png" alt="" width="12" height="10" /> ALLOY</p>
-          <h3 class="lit-amber">SALVAGE, NOT MONEY</h3>
+          <div class="alloy-line" aria-hidden="true"><img class="px" src="./media/alloy.png" alt="" width="12" height="10" /></div>
+          <h3 class="lit-amber">ALLOY</h3>
           <p>
-            Chunks spawn in the lane and scrapped machines burst into more. It
-            banks <em>as you climb</em>, not at the end &mdash; so a run you walk
-            away from still paid for itself.
+            Chunks spawn in the lane and scrapped machines drop more. It banks
+            as you climb, so quitting a run doesn&rsquo;t cost you what you
+            picked up.
           </p>
         </div>
 
@@ -832,10 +759,9 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
           </div>
           <h3 class="lit-cyan">FOUR THINGS TO CARRY</h3>
           <p>
-            A rocket for three boost pads&rsquo; worth of sky, a hover field to
-            hang and pick your landing, a coil that overcharges your next three
-            bounces, a shield that shrugs off the next three machines. Found
-            floating, or bought at the scrap market.
+            A rocket, a hover field for picking your landing, a coil that
+            overcharges your next few bounces, and a shield. Find them in the
+            column or buy them at the scrap market.
           </p>
         </div>
 
@@ -855,23 +781,20 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
             <i class="locked" style="background-position:90.91% 0"></i>
             <i class="locked" style="background-position:100% 0"></i>
           </div>
-          <h3 class="lit-magenta">TWELVE FRAMES TO WEAR</h3>
+          <h3 class="lit-magenta">TWELVE TO UNLOCK</h3>
           <p>
-            Reach a sky for the first time and you salvage the chassis that
-            belongs to it. The rest are unlocked by the kind of run only a
-            regular has: boost pads in a row, lifetime bounces, distance.
+            Some come with reaching a new sky. The rest take the kind of run
+            that needs practice.
           </p>
         </div>
 
         <div class="panel reveal">
           <span class="idx">PROPERTY</span>
-          <h3 class="lit-cyan">A ROOM UP THE COLUMN</h3>
+          <h3 class="lit-cyan">A ROOM HIGHER UP</h3>
           <p>
-            An apartment is the one purchase that changes where a run
-            <em>begins</em>: buy the fire escape in the stacks, the slab edge
-            outside a glass sublet, a mooring deck above the weather, a squatted
-            comms satellite. The next run opens on its doorstep. What
-            you&rsquo;re buying is not having to climb it again.
+            Buy an apartment further up the column and the next run starts on
+            its doorstep. You&rsquo;re paying to skip a climb you&rsquo;ve
+            already done.
           </p>
         </div>
       </div>
@@ -882,8 +805,8 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
   <section class="band promise">
     <div class="wrap">
       <div class="reveal">
-        <p class="kicker" style="color:var(--amber)">05 &mdash; The deal</p>
-        <h2 class="head" style="color:#fff">One price. That&rsquo;s the whole deal.</h2>
+        <p class="kicker" style="color:var(--amber)">05 // The price</p>
+        <h2 class="head" style="color:#fff">One price, and that&rsquo;s it.</h2>
       </div>
       <ul class="promise-list reveal">
         <li>PAID ONCE</li>
@@ -894,15 +817,12 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
       </ul>
       <div class="reveal">
         <p>
-          There is no advertising of any kind, nothing to buy inside the game,
-          no sign-up, and no analytics SDK watching how you play. We run no
-          backend and hold no database of players. Your save file lives on your
-          phone.
+          No ads, nothing to buy inside the game, no sign-up, no analytics.
+          There&rsquo;s no server behind it &mdash; your save sits on your phone.
         </p>
         <p>
-          Sign in to Google Play Games if you want a leaderboard, 23
-          achievements and a cloud backup of that save &mdash; entirely optional,
-          and the game is complete without it. The full detail is in the
+          Sign in to Google Play Games if you want leaderboards, achievements
+          and a cloud backup. Entirely optional. The rest is in the
           <a href="./privacy/">privacy policy</a>.
         </p>
       </div>
@@ -915,8 +835,8 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
     <div class="grid-tex" aria-hidden="true"></div>
     <div class="scan" aria-hidden="true"></div>
     <div class="wrap">
-      <h2 class="lit-cyan">How high before the sky runs out?</h2>
-      <p>It doesn&rsquo;t. That&rsquo;s the point &mdash; but you should go and find out how far you get.</p>
+      <h2 class="lit-cyan">See how far you get.</h2>
+      <p>The column doesn&rsquo;t end. Runs do.</p>
       <div class="cta-row">
         <a class="btn" href="https://play.google.com/store/apps/details?id=dk.antontanderup.neonhalo">
           <svg width="17" height="19" viewBox="0 0 17 19" aria-hidden="true" focusable="false">
@@ -959,7 +879,7 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
 
     <div class="colophon">
       <span>Made by Anton &middot; <a href="mailto:anton@adamsen.io">anton@adamsen.io</a></span>
-      <span>Art, sprites and screenshots are the game&rsquo;s own. Type is Silkscreen and VT323, under the SIL Open Font License.</span>
+      <span>Silkscreen and VT323, under the SIL Open Font License.</span>
     </div>
   </div>
 </footer>
@@ -970,8 +890,7 @@ document.documentElement.classList.add("js");
 (function () {
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Reveal on entry. One observer, unobserving as it goes, so a long page
-  // doesn't keep a callback alive per element.
+  // Reveal on entry. One observer, unobserving as it goes.
   if ("IntersectionObserver" in window) {
     var reveal = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -985,9 +904,8 @@ document.documentElement.classList.add("js");
     document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
   }
 
-  // The ascent viewer. The zone whose block is nearest the middle of the
-  // viewport is the one on the glass, which is what makes the climb read as
-  // continuous rather than as eight cards.
+  // The ascent viewer: whichever zone block is nearest the middle of the
+  // viewport is the one on the glass.
   var zones = [].slice.call(document.querySelectorAll(".zone"));
   var plates = [].slice.call(document.querySelectorAll(".viewer-frame .plate"));
   var ticks = [].slice.call(document.querySelectorAll(".viewer-rail i"));
@@ -1000,6 +918,7 @@ document.documentElement.classList.add("js");
     current = i;
     plates.forEach(function (p, n) { p.classList.toggle("on", n === i); });
     ticks.forEach(function (t, n) { t.classList.toggle("on", n <= i); });
+    if (!reduced) zones.forEach(function (z, n) { z.classList.toggle("dim", n !== i); });
     if (readout) readout.textContent = zones[i].getAttribute("data-alt");
   }
 
