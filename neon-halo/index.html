@@ -302,6 +302,24 @@ h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 
 .rule-art .r-alloy { width: 40px; animation: drift 2.6s ease-in-out infinite; }
 @keyframes drift { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(7px, -9px); } }
 
+/* The machine and what comes out of it, in one picture. */
+.rule-art-stomp { position: relative; }
+.rule-art-stomp .r-scrap { position: absolute; width: 22px; opacity: .95; }
+.rule-art-stomp .r-scrap-a { left: 76px; bottom: 50px; animation: drift 2.4s ease-in-out infinite; }
+.rule-art-stomp .r-scrap-b { left: 102px; bottom: 20px; animation: drift 3.1s ease-in-out infinite .4s; }
+.rule-art-stomp .r-scrap-c { left: 42px; bottom: 60px; animation: drift 2.7s ease-in-out infinite .9s; }
+
+/* Lighter than the rule panels: these are objects, not points being made. */
+.gear { list-style: none; padding: 0; margin: 44px 0 0; display: grid; gap: 26px 18px;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.gear li { border-top: 1px solid var(--line); padding-top: 24px; }
+.gear img { width: 44px; margin-bottom: 18px; animation: drift 3.4s ease-in-out infinite; }
+.gear li:nth-child(2) img { animation-duration: 4.1s; animation-delay: .5s; }
+.gear li:nth-child(3) img { animation-duration: 3.7s; animation-delay: .2s; }
+.gear li:nth-child(4) img { animation-duration: 4.4s; animation-delay: .8s; }
+.gear h3 { font-size: 14px; letter-spacing: .12em; margin-bottom: 8px; }
+.gear p { margin: 0; color: var(--dim); font-size: 19px; }
+
 /* -- gallery --------------------------------------------------------------- */
 
 /* Full-bleed scroller whose first card lines up with the content column.
@@ -389,7 +407,7 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rain, .hero-ring, .wordmark, .ticker-track, .hopper .bot, .hopper .flame,
-  .scroll-cue span, .eyebrow .dot, .rule-art img {
+  .scroll-cue span, .eyebrow .dot, .rule-art img, .gear img {
     animation: none !important;
   }
   .js .reveal { opacity: 1; transform: none; }
@@ -494,7 +512,7 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
   <section class="band" id="rules">
     <div class="wrap">
       <div class="reveal">
-        <h2 class="head lit-cyan">The whole game is three rules.</h2>
+        <h2 class="head lit-cyan">The whole game is two rules.</h2>
         <p class="head-sub">No tutorial. Press start and go.</p>
       </div>
 
@@ -504,37 +522,62 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
           <div class="rule-art" aria-hidden="true">
             <img class="r-bot px" src="./media/bot.png" alt="" width="22" height="24" />
           </div>
-          <h3 class="lit-cyan">NO JUMP BUTTON</h3>
+          <h3 class="lit-cyan">NEVER STOP JUMPING</h3>
           <p>
-            The bounce is automatic. You only aim it. Tilt, or switch to touch
-            controls and drag with a thumb.
+            Steer by tilting your phone, or use touch controls and drag with
+            your finger.
           </p>
         </div>
 
         <div class="panel reveal">
           <span class="idx">RULE 02</span>
-          <div class="rule-art" aria-hidden="true">
+          <div class="rule-art rule-art-stomp" aria-hidden="true">
             <img class="r-drone px" src="./media/drone.png" alt="" width="20" height="14" />
+            <img class="r-scrap r-scrap-a px" src="./media/alloy.png" alt="" width="12" height="10" />
+            <img class="r-scrap r-scrap-b px" src="./media/alloy.png" alt="" width="12" height="10" />
+            <img class="r-scrap r-scrap-c px" src="./media/alloy.png" alt="" width="12" height="10" />
           </div>
-          <h3 class="lit-magenta">LAND ON ITS HEAD</h3>
+          <h3 class="lit-magenta">JUMP ON YOUR FOES</h3>
           <p>
-            Machines in the gaps, and nothing to shoot them with. Land on top
-            and one breaks apart. Get it wrong and it costs you.
+            Land on hostile machines to break them apart and pick up scrap and
+            alloy from their remains.
           </p>
         </div>
 
-        <div class="panel reveal">
-          <span class="idx">RULE 03</span>
-          <div class="rule-art" aria-hidden="true">
-            <img class="r-alloy px" src="./media/alloy.png" alt="" width="12" height="10" />
-          </div>
-          <h3 class="lit-amber">THERE IS NO TOP</h3>
-          <p>
-            The column builds itself as you climb and never runs out. It only
-            gets stranger the higher you go.
-          </p>
-        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- gear -->
+  <section class="band">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 class="head lit-cyan">Things to find on the way up.</h2>
+        <p class="head-sub">Grab one and it waits on the HUD until you want it.</p>
+      </div>
+
+      <ul class="gear">
+        <li class="reveal">
+          <img class="px" src="./media/gear-rocket.png" alt="" width="14" height="18" />
+          <h3 class="lit-cyan">ROCKET</h3>
+          <p>Ride it straight up</p>
+        </li>
+        <li class="reveal">
+          <img class="px" src="./media/gear-hover.png" alt="" width="14" height="18" />
+          <h3 class="lit-cyan">HOVER</h3>
+          <p>Hang in the air and aim</p>
+        </li>
+        <li class="reveal">
+          <img class="px" src="./media/gear-coil.png" alt="" width="14" height="18" />
+          <h3 class="lit-cyan">COIL</h3>
+          <p>Next three landings launch hard</p>
+        </li>
+        <li class="reveal">
+          <img class="px" src="./media/gear-shield.png" alt="" width="14" height="18" />
+          <h3 class="lit-cyan">SHIELD</h3>
+          <p>Shrugs off three machine hits</p>
+        </li>
+      </ul>
     </div>
   </section>
 
