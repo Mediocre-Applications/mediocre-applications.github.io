@@ -310,15 +310,16 @@ h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 
 .rule-art-stomp .r-scrap-c { left: 42px; bottom: 60px; animation: drift 2.7s ease-in-out infinite .9s; }
 
 /* Lighter than the rule panels: these are objects, not points being made. */
-.gear { list-style: none; padding: 0; margin: 44px 0 0; display: grid; gap: 26px 18px;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
-.gear li { border-top: 1px solid var(--line); padding-top: 24px; }
-.gear img { width: 44px; margin-bottom: 18px; animation: drift 3.4s ease-in-out infinite; }
+.gear { list-style: none; padding: 0; margin: 40px 0 0; display: grid; gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); }
+.gear li { border: 1px solid var(--line); background: var(--panel);
+  padding: 30px 18px 22px; display: flex; flex-direction: column;
+  align-items: center; gap: 22px; }
+.gear img { width: 56px; animation: drift 3.4s ease-in-out infinite; }
 .gear li:nth-child(2) img { animation-duration: 4.1s; animation-delay: .5s; }
 .gear li:nth-child(3) img { animation-duration: 3.7s; animation-delay: .2s; }
 .gear li:nth-child(4) img { animation-duration: 4.4s; animation-delay: .8s; }
-.gear h3 { font-size: 14px; letter-spacing: .12em; margin-bottom: 8px; }
-.gear p { margin: 0; color: var(--dim); font-size: 19px; }
+.gear h3 { font-size: 13px; letter-spacing: .14em; }
 
 /* -- gallery --------------------------------------------------------------- */
 
@@ -553,29 +554,24 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
     <div class="wrap">
       <div class="reveal">
         <h2 class="head lit-cyan">Things to find on the way up.</h2>
-        <p class="head-sub">Grab one and it waits on the HUD until you want it.</p>
       </div>
 
       <ul class="gear">
         <li class="reveal">
           <img class="px" src="./media/gear-rocket.png" alt="" width="14" height="18" />
           <h3 class="lit-cyan">ROCKET</h3>
-          <p>Ride it straight up</p>
         </li>
         <li class="reveal">
           <img class="px" src="./media/gear-hover.png" alt="" width="14" height="18" />
           <h3 class="lit-cyan">HOVER</h3>
-          <p>Hang in the air and aim</p>
         </li>
         <li class="reveal">
           <img class="px" src="./media/gear-coil.png" alt="" width="14" height="18" />
           <h3 class="lit-cyan">COIL</h3>
-          <p>Next three landings launch hard</p>
         </li>
         <li class="reveal">
           <img class="px" src="./media/gear-shield.png" alt="" width="14" height="18" />
           <h3 class="lit-cyan">SHIELD</h3>
-          <p>Shrugs off three machine hits</p>
         </li>
       </ul>
     </div>
