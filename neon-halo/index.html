@@ -77,7 +77,7 @@ a { color: var(--cyan); }
 /* Only used where the source is shown at 1x or a whole multiple of it. */
 .px { image-rendering: pixelated; image-rendering: crisp-edges; }
 
-h1, h2, h3, .display { font-family: var(--display); font-weight: 700; line-height: 1.25;
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.25;
   letter-spacing: .04em; margin: 0; }
 
 .wrap { max-width: var(--col); margin: 0 auto; padding: 0 var(--gutter); }
@@ -279,8 +279,6 @@ section { position: relative; }
 }
 .band > * { position: relative; }
 
-.kicker { font-family: var(--display); font-size: 11px; letter-spacing: .26em;
-  color: var(--magenta); text-transform: uppercase; margin: 0 0 16px; }
 h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 0 20px; }
 .head-sub { font-size: clamp(20px, 2.2vw, 24px); color: var(--dim); max-width: 34em; margin: 0; }
 
@@ -305,34 +303,7 @@ h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 
 .rule-art .r-bot { width: 52px; animation: hop 1.4s infinite; }
 .rule-art .r-drone { width: 66px; animation: drift 3.4s ease-in-out infinite; }
 .rule-art .r-alloy { width: 40px; animation: drift 2.6s ease-in-out infinite; }
-.rule-art .r-plat { width: 84px; opacity: .85; }
 @keyframes drift { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(7px, -9px); } }
-
-/* -- the ascent ------------------------------------------------------------ */
-
-.ascent { background:
-  linear-gradient(to bottom, #060a13 0%, #0a0716 30%, #05040e 70%, #060a13 100%); }
-.ascent-list { list-style: none; padding: 0; margin: 0; }
-.ascent-grid { display: grid; gap: clamp(28px, 5vw, 70px); align-items: start;
-  grid-template-columns: 1fr; margin-top: 52px; }
-
-.viewer { display: none; }
-
-.zone { position: relative; padding: 0 0 46px; }
-.zone:last-child { padding-bottom: 0; }
-.zone-plate {
-  width: 100%; max-width: 360px; aspect-ratio: 360 / 640; margin-bottom: 20px;
-  border: 1px solid var(--line); background-size: cover; background-position: center;
-  image-rendering: pixelated;
-}
-.zone-no { font-family: var(--display); font-size: 10px; letter-spacing: .22em;
-  color: var(--line-bright); }
-.zone h3 { font-size: clamp(22px, 3.8vw, 32px); letter-spacing: .07em; margin: 8px 0 6px; }
-.zone .alt { font-family: var(--display); font-size: 12px; letter-spacing: .16em;
-  color: var(--amber); margin: 0; }
-
-.ascent-foot { margin-top: 46px; border-top: 1px dashed var(--line); padding-top: 26px;
-  color: var(--dim); font-size: 20px; max-width: 40em; }
 
 /* -- gallery --------------------------------------------------------------- */
 
@@ -351,29 +322,6 @@ h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 
   color: var(--cyan-dim); margin-top: 14px; }
 .scroll-hint { font-family: var(--display); font-size: 10px; letter-spacing: .2em;
   color: var(--line-bright); margin: 18px 0 0; }
-
-/* -- the hold -------------------------------------------------------------- */
-
-.hold { display: grid; gap: 18px; margin-top: 46px;
-  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr)); }
-.gear-row { display: flex; gap: 20px; margin: 0 0 20px; align-items: flex-end; }
-.gear-row figure { margin: 0; text-align: center; }
-.gear-row img { width: 30px; margin: 0 auto 10px; }
-.gear-row figcaption { font-family: var(--display); font-size: 9px; letter-spacing: .1em;
-  color: var(--line-bright); }
-
-/* The rack in the chassis bay: twelve frames, one sprite sheet, one owned. */
-.rack { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-bottom: 18px; }
-.rack i {
-  display: block; aspect-ratio: 22 / 24; border: 1px solid var(--line);
-  background-image: url(./media/chassis.png); background-repeat: no-repeat;
-  background-size: 1300% auto; /* 12 cells at pitch 24 in a 286px strip */
-  image-rendering: pixelated;
-}
-.rack i.locked { filter: brightness(0) saturate(0) opacity(.42); }
-
-.alloy-line { display: flex; align-items: flex-end; margin: 0 0 20px; height: 51px; }
-.alloy-line img { width: 36px; animation: drift 3s ease-in-out infinite; }
 
 /* -- the promise ----------------------------------------------------------- */
 
@@ -427,41 +375,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
 
 /* ------------------------------------------------------------------ ≥ 900px */
 @media (min-width: 900px) {
-  .ascent-grid { grid-template-columns: 360px 1fr; }
-
-  /* One window that never cuts, with the sky changing behind it. */
-  .viewer { --plate: min(360px, calc((100vh - 130px) * .5625));
-    display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
-    position: sticky; top: 0; height: 100vh; }
-  .viewer-frame { position: relative; width: var(--plate); aspect-ratio: 360 / 640;
-    border: 1px solid var(--line-bright); background: #000; overflow: hidden;
-    box-shadow: 0 0 48px rgba(0, 0, 0, .85); }
-  .viewer-frame .plate { position: absolute; inset: 0; background-size: cover;
-    background-position: center; image-rendering: pixelated;
-    opacity: 0; transition: opacity .7s ease; }
-  .viewer-frame .plate.on { opacity: 1; }
-  .viewer-frame .scan { z-index: 3; }
-  .viewer-readout { position: absolute; z-index: 4; top: 14px; left: 14px; right: 14px;
-    margin: 0; padding: 9px 0 11px; text-align: center; font-family: var(--display);
-    background: rgba(3, 6, 12, .74); border: 1px solid var(--line);
-    backdrop-filter: blur(2px); }
-  .viewer-readout .lab { display: block; font-size: 8px; letter-spacing: .3em;
-    color: var(--cyan-dim); margin-bottom: 6px; }
-  .viewer-readout .val { font-size: 22px; letter-spacing: .08em; color: var(--cyan);
-    text-shadow: 0 0 12px rgba(99, 242, 255, .7); }
-  .viewer-rail { display: flex; gap: 5px; margin-top: 14px; width: var(--plate); }
-  .viewer-rail i { flex: 1; height: 3px; background: var(--line); transition: background .4s ease; }
-  .viewer-rail i.on { background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
-
-  .hold { grid-template-columns: repeat(2, 1fr); }
-
-  .zone { padding: 0 0 min(22vh, 190px); }
-  .zone-plate { display: none; }
-
-  /* The list lights up level with the sky on the glass. */
-  .zone h3, .zone .alt, .zone .zone-no { transition: color .5s ease, text-shadow .5s ease; }
-  .zone.dim h3 { color: #24506e; text-shadow: none; }
-  .zone.dim .alt, .zone.dim .zone-no { color: #1d3c55; }
   .shot { width: 290px; }
 }
 
@@ -473,18 +386,16 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
   .cta-row { gap: 14px; }
   .hero-bottom { flex-direction: column-reverse; align-items: flex-start; gap: 30px; }
   .hopper { align-self: flex-end; margin-right: 8px; }
-  .gear-row { gap: 14px; }
 }
 
 /* -------------------------------------------------------- reduced motion -- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rain, .hero-ring, .wordmark, .ticker-track, .hopper .bot, .hopper .flame,
-  .scroll-cue span, .eyebrow .dot, .rule-art img, .alloy-line img {
+  .scroll-cue span, .eyebrow .dot, .rule-art img {
     animation: none !important;
   }
   .js .reveal { opacity: 1; transform: none; }
-  .viewer-frame .plate { transition: none; }
 }
 </style>
 </head>
@@ -527,7 +438,7 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
     </div>
 
     <div class="hero-bottom">
-      <a class="scroll-cue" href="#rules"><span aria-hidden="true"></span>ALTITUDE 0 M &mdash; SCROLL TO CLIMB</a>
+      <a class="scroll-cue" href="#shots"><span aria-hidden="true"></span>ALTITUDE 0 M</a>
       <div class="hopper" aria-hidden="true">
         <img class="bot px" src="./media/bot.png" alt="" width="22" height="24" />
         <img class="flame px" src="./media/flame.png" alt="" width="12" height="16" />
@@ -545,11 +456,51 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
 
 <main id="main">
 
+  <!-- ---------------------------------------------------------- gallery -->
+  <section class="band" id="shots">
+    <div class="wrap reveal">
+      <h2 class="head lit-cyan">Screenshots</h2>
+      <p class="scroll-hint">&larr; drag &rarr;</p>
+    </div>
+
+    <div class="gallery">
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-01-sprawl.png"
+          alt="Climbing between tenement ledges in the rain."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>THE SPRAWL</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-02-skyline.png"
+          alt="A boost pad firing the mech up between two towers."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>SKYLINE</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-03-open-sky.png"
+          alt="Level with the crown of the last tower as the sky opens up."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>OPEN SKY</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-04-shipbreak.png"
+          alt="Climbing through the hull sections of a liner being cut up."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>SHIPBREAK</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-05-halo.png"
+          alt="The ring habitat turning on the horizon at the top of the climb."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>NEON HALO</figcaption>
+      </figure>
+    </div>
+  </section>
+
   <!-- ------------------------------------------------------------ rules -->
   <section class="band" id="rules">
     <div class="wrap">
       <div class="reveal">
-        <p class="kicker">01 // How it plays</p>
         <h2 class="head lit-cyan">The whole game is three rules.</h2>
         <p class="head-sub">No tutorial. Press start and go.</p>
       </div>
@@ -599,222 +550,10 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
     </div>
   </section>
 
-  <!-- ----------------------------------------------------------- ascent -->
-  <section class="band ascent" id="ascent">
-    <div class="wrap">
-      <div class="reveal">
-        <p class="kicker">02 // The climb</p>
-        <h2 class="head lit-cyan">Eight skies, one climb.</h2>
-        <p class="head-sub">No levels, no loading screens. One sky blends into the next while you&rsquo;re busy staying alive.</p>
-      </div>
-
-      <div class="ascent-grid">
-        <div class="viewer" aria-hidden="true">
-          <div class="viewer-frame">
-            <div class="plate on" data-plate="0" style="background-image:url(./media/zone-01-sprawl.png)"></div>
-            <div class="plate" data-plate="1" style="background-image:url(./media/zone-02-skyline.png)"></div>
-            <div class="plate" data-plate="2" style="background-image:url(./media/zone-03-open-sky.png)"></div>
-            <div class="plate" data-plate="3" style="background-image:url(./media/zone-04-orbit.png)"></div>
-            <div class="plate" data-plate="4" style="background-image:url(./media/zone-05-shipbreak.png)"></div>
-            <div class="plate" data-plate="5" style="background-image:url(./media/zone-06-expanse.png)"></div>
-            <div class="plate" data-plate="6" style="background-image:url(./media/zone-07-asteroid.png)"></div>
-            <div class="plate" data-plate="7" style="background-image:url(./media/zone-08-halo.png)"></div>
-            <div class="scan"></div>
-            <p class="viewer-readout">
-              <span class="lab">ALTITUDE</span>
-              <span class="val" id="readout">0 M</span>
-            </p>
-          </div>
-          <div class="viewer-rail">
-            <i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-          </div>
-        </div>
-
-        <ol class="ascent-list">
-          <li class="zone reveal" data-zone="0" data-alt="0 M">
-            <div class="zone-plate px" style="background-image:url(./media/zone-01-sprawl.png)"></div>
-            <span class="zone-no">ZONE 01</span>
-            <h3 class="lit-amber">THE SPRAWL</h3>
-            <p class="alt">0 M</p>
-          </li>
-
-          <li class="zone reveal" data-zone="1" data-alt="3,180 M">
-            <div class="zone-plate px" style="background-image:url(./media/zone-02-skyline.png)"></div>
-            <span class="zone-no">ZONE 02</span>
-            <h3 class="lit-cyan">SKYLINE</h3>
-            <p class="alt">3,180 M</p>
-          </li>
-
-          <li class="zone reveal" data-zone="2" data-alt="7,020 M">
-            <div class="zone-plate px" style="background-image:url(./media/zone-03-open-sky.png)"></div>
-            <span class="zone-no">ZONE 03</span>
-            <h3 class="lit-magenta">OPEN SKY</h3>
-            <p class="alt">7,020 M</p>
-          </li>
-
-          <li class="zone reveal" data-zone="3" data-alt="11,340 M">
-            <div class="zone-plate px" style="background-image:url(./media/zone-04-orbit.png)"></div>
-            <span class="zone-no">ZONE 04</span>
-            <h3 class="lit-cyan">ORBIT</h3>
-            <p class="alt">11,340 M</p>
-          </li>
-
-          <li class="zone reveal" data-zone="4" data-alt="15,480 M">
-            <div class="zone-plate px" style="background-image:url(./media/zone-05-shipbreak.png)"></div>
-            <span class="zone-no">ZONE 05</span>
-            <h3 class="lit-amber">SHIPBREAK</h3>
-            <p class="alt">15,480 M</p>
-          </li>
-
-          <li class="zone reveal" data-zone="5" data-alt="19,320 M">
-            <div class="zone-plate px" style="background-image:url(./media/zone-06-expanse.png)"></div>
-            <span class="zone-no">ZONE 06</span>
-            <h3 class="lit-cyan">THE EXPANSE</h3>
-            <p class="alt">19,320 M</p>
-          </li>
-
-          <li class="zone reveal" data-zone="6" data-alt="23,490 M">
-            <div class="zone-plate px" style="background-image:url(./media/zone-07-asteroid.png)"></div>
-            <span class="zone-no">ZONE 07</span>
-            <h3 class="lit-amber">ASTEROID FIELD</h3>
-            <p class="alt">23,490 M</p>
-          </li>
-
-          <li class="zone reveal" data-zone="7" data-alt="27,450 M">
-            <div class="zone-plate px" style="background-image:url(./media/zone-08-halo.png)"></div>
-            <span class="zone-no">ZONE 08</span>
-            <h3 class="lit-magenta">NEON HALO</h3>
-            <p class="alt">27,450 M</p>
-          </li>
-        </ol>
-      </div>
-
-      <p class="ascent-foot reveal">
-        Some of it isn&rsquo;t generated. There are stretches built by hand and
-        dropped into the column: a forced zig-zag through flying traffic, a
-        noodle bar hanging over the street, a service shaft between two towers,
-        a liner being cut up in a breaking yard. You won&rsquo;t see them all in
-        one run.
-      </p>
-    </div>
-  </section>
-
-  <!-- ---------------------------------------------------------- gallery -->
-  <section class="band">
-    <div class="wrap reveal">
-      <p class="kicker">03 // Screenshots</p>
-      <h2 class="head lit-cyan">Screenshots.</h2>
-      <p class="scroll-hint">&larr; drag &rarr;</p>
-    </div>
-
-    <div class="gallery">
-      <figure class="shot">
-        <div class="frame"><img src="./media/shot-01-sprawl.png"
-          alt="Climbing between tenement ledges in the rain."
-          width="720" height="1440" loading="lazy" /></div>
-        <figcaption>THE SPRAWL</figcaption>
-      </figure>
-      <figure class="shot">
-        <div class="frame"><img src="./media/shot-02-crowns.png"
-          alt="Level with the crown of the last tower as the sky opens up."
-          width="720" height="1440" loading="lazy" /></div>
-        <figcaption>OPEN SKY</figcaption>
-      </figure>
-      <figure class="shot">
-        <div class="frame"><img src="./media/shot-03-shipbreak.png"
-          alt="Climbing through the hull sections of a liner being cut up."
-          width="720" height="1440" loading="lazy" /></div>
-        <figcaption>SHIPBREAK</figcaption>
-      </figure>
-      <figure class="shot">
-        <div class="frame"><img src="./media/shot-04-halo.png"
-          alt="The ring habitat turning on the horizon at the top of the climb."
-          width="720" height="1440" loading="lazy" /></div>
-        <figcaption>NEON HALO</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- ------------------------------------------------------------- hold -->
-  <section class="band">
-    <div class="wrap">
-      <div class="reveal">
-        <p class="kicker">04 // What you keep</p>
-        <h2 class="head lit-cyan">Alloy buys everything here.</h2>
-        <p class="head-sub">None of it costs real money.</p>
-      </div>
-
-      <div class="hold">
-        <div class="panel reveal">
-          <span class="idx">CURRENCY</span>
-          <div class="alloy-line" aria-hidden="true"><img class="px" src="./media/alloy.png" alt="" width="12" height="10" /></div>
-          <h3 class="lit-amber">ALLOY</h3>
-          <p>
-            Chunks of it spawn in the column, and scrapped machines drop more.
-            It banks as you climb rather than at the end, so bailing out halfway
-            doesn&rsquo;t wipe what you collected.
-          </p>
-        </div>
-
-        <div class="panel reveal">
-          <span class="idx">GEAR</span>
-          <div class="gear-row" aria-hidden="true">
-            <figure><img class="px" src="./media/gear-rocket.png" alt="" width="14" height="18" /><figcaption>ROCKET</figcaption></figure>
-            <figure><img class="px" src="./media/gear-hover.png" alt="" width="14" height="18" /><figcaption>HOVER</figcaption></figure>
-            <figure><img class="px" src="./media/gear-coil.png" alt="" width="14" height="18" /><figcaption>COIL</figcaption></figure>
-            <figure><img class="px" src="./media/gear-shield.png" alt="" width="14" height="18" /><figcaption>SHIELD</figcaption></figure>
-          </div>
-          <h3 class="lit-cyan">FOUR THINGS TO CARRY</h3>
-          <p>
-            A rocket, a hover field for hanging in the air until you like the
-            landing, a coil that overcharges your next few bounces, and a shield
-            that eats the next few machine hits. Find them in the column or buy
-            them with alloy at the scrap market.
-          </p>
-        </div>
-
-        <div class="panel reveal">
-          <span class="idx">CHASSIS</span>
-          <div class="rack" aria-hidden="true">
-            <i style="background-position:0% 0"></i>
-            <i class="locked" style="background-position:9.09% 0"></i>
-            <i class="locked" style="background-position:18.18% 0"></i>
-            <i class="locked" style="background-position:27.27% 0"></i>
-            <i class="locked" style="background-position:36.36% 0"></i>
-            <i class="locked" style="background-position:45.45% 0"></i>
-            <i class="locked" style="background-position:54.55% 0"></i>
-            <i class="locked" style="background-position:63.64% 0"></i>
-            <i class="locked" style="background-position:72.73% 0"></i>
-            <i class="locked" style="background-position:81.82% 0"></i>
-            <i class="locked" style="background-position:90.91% 0"></i>
-            <i class="locked" style="background-position:100% 0"></i>
-          </div>
-          <h3 class="lit-magenta">TWELVE ROBOT FRAMES</h3>
-          <p>
-            A few unlock the first time you reach a new sky. The rest want
-            something specific out of you, like a run that chains a lot of boost
-            pads, or a lifetime bounce count you&rsquo;ll get to eventually.
-          </p>
-        </div>
-
-        <div class="panel reveal">
-          <span class="idx">PROPERTY</span>
-          <h3 class="lit-cyan">A ROOM HIGHER UP</h3>
-          <p>
-            Buy an apartment further up the column and the next run starts on
-            its doorstep. You&rsquo;re paying to skip a climb you&rsquo;ve
-            already done.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ---------------------------------------------------------- promise -->
   <section class="band promise">
     <div class="wrap">
       <div class="reveal">
-        <p class="kicker" style="color:var(--amber)">05 // The price</p>
         <h2 class="head" style="color:#fff">One price, and that&rsquo;s it.</h2>
       </div>
       <ul class="promise-list reveal">
@@ -897,8 +636,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
 document.documentElement.classList.add("js");
 
 (function () {
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
   // Reveal on entry. One observer, unobserving as it goes.
   if ("IntersectionObserver" in window) {
     var reveal = new IntersectionObserver(function (entries) {
@@ -913,47 +650,6 @@ document.documentElement.classList.add("js");
     document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
   }
 
-  // The ascent viewer: whichever zone block is nearest the middle of the
-  // viewport is the one on the glass.
-  var zones = [].slice.call(document.querySelectorAll(".zone"));
-  var plates = [].slice.call(document.querySelectorAll(".viewer-frame .plate"));
-  var ticks = [].slice.call(document.querySelectorAll(".viewer-rail i"));
-  var readout = document.getElementById("readout");
-  if (!zones.length || !plates.length) return;
-
-  var current = -1;
-  function show(i) {
-    if (i === current) return;
-    current = i;
-    plates.forEach(function (p, n) { p.classList.toggle("on", n === i); });
-    ticks.forEach(function (t, n) { t.classList.toggle("on", n <= i); });
-    if (!reduced) zones.forEach(function (z, n) { z.classList.toggle("dim", n !== i); });
-    if (readout) readout.textContent = zones[i].getAttribute("data-alt");
-  }
-
-  var pending = false;
-  function pick() {
-    pending = false;
-    var mid = window.innerHeight / 2;
-    var best = 0, bestDist = Infinity;
-    for (var i = 0; i < zones.length; i++) {
-      var r = zones[i].getBoundingClientRect();
-      var d = Math.abs(r.top + Math.min(r.height, window.innerHeight) / 2 - mid);
-      if (d < bestDist) { bestDist = d; best = i; }
-    }
-    show(best);
-  }
-  function onScroll() {
-    if (pending) return;
-    pending = true;
-    window.requestAnimationFrame(pick);
-  }
-
-  if (!reduced) {
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-  }
-  pick();
 })();
 </script>
 </body>
