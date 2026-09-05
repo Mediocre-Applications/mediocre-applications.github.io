@@ -276,7 +276,8 @@ section { position: relative; }
 }
 .band > * { position: relative; }
 
-h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 0 20px; }
+h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 0 20px;
+  text-wrap: balance; }
 .head-sub { font-size: clamp(20px, 2.2vw, 24px); color: var(--dim); max-width: 34em; margin: 0; }
 
 /* -- panels ---------------------------------------------------------------- */
@@ -289,8 +290,6 @@ h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 
   border-bottom: 2px solid var(--cyan-dim); }
 .panel h3 { font-size: 15px; letter-spacing: .1em; margin: 0 0 10px; }
 .panel p { margin: 0; color: var(--dim); font-size: 20px; line-height: 1.45; }
-.panel .idx { font-family: var(--display); font-size: 10px; letter-spacing: .22em;
-  color: var(--line-bright); display: block; margin-bottom: 14px; }
 
 .rules { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
   margin-top: 46px; }
@@ -519,13 +518,11 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
   <section class="band" id="rules">
     <div class="wrap">
       <div class="reveal">
-        <h2 class="head lit-cyan">The whole game is two rules.</h2>
-        <p class="head-sub">No tutorial. Press start and go.</p>
+        <h2 class="head lit-cyan">No tutorial. Press start and go.</h2>
       </div>
 
       <div class="rules">
         <div class="panel reveal">
-          <span class="idx">RULE 01</span>
           <div class="rule-art" aria-hidden="true">
             <img class="r-bot px" src="./media/bot.png" alt="" width="22" height="24" />
           </div>
@@ -537,7 +534,6 @@ footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bo
         </div>
 
         <div class="panel reveal">
-          <span class="idx">RULE 02</span>
           <div class="rule-art rule-art-stomp" aria-hidden="true">
             <img class="r-drone px" src="./media/drone.png" alt="" width="20" height="14" />
             <img class="r-scrap r-scrap-a px" src="./media/alloy.png" alt="" width="12" height="10" />
