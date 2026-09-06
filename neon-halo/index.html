@@ -4,94 +4,680 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>NEON HALO: Rise of the Jumpbot 5000</title>
-<meta name="description" content="A pixel-art endless vertical jumper for Android. Tilt to steer a scavenged mech up an endless column of platforms, through seven altitude zones." />
+<meta name="description" content="A pixel-art endless vertical jumper for Android. Tilt to steer, climb as high as you can. Paid once, no ads, works offline." />
 <meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#03060c" />
+<link rel="icon" href="./icon.png" />
+<link rel="apple-touch-icon" href="./icon.png" />
+<link rel="canonical" href="https://mediocre-applications.github.io/neon-halo/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Mediocre Applications" />
+<meta property="og:title" content="NEON HALO: Rise of the Jumpbot 5000" />
+<meta property="og:description" content="Tilt. Jump. Ascend. A pixel-art endless vertical jumper for Android." />
+<meta property="og:url" content="https://mediocre-applications.github.io/neon-halo/" />
+<meta property="og:image" content="https://mediocre-applications.github.io/neon-halo/media/social-card.png" />
+<meta property="og:image:width" content="1024" />
+<meta property="og:image:height" content="500" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="NEON HALO: Rise of the Jumpbot 5000" />
+<meta name="twitter:description" content="Tilt. Jump. Ascend. A pixel-art endless vertical jumper for Android." />
+<meta name="twitter:image" content="https://mediocre-applications.github.io/neon-halo/media/social-card.png" />
+
+<link rel="preload" href="./media/fonts/silkscreen-700.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="./media/fonts/vt323-400.woff2" as="font" type="font/woff2" crossorigin />
+
 <style>
-  :root {
-    --cyan: #63f2ff;
-    --cyan-ink: #0b6b7d;
-    --ink: #1b2630;
-    --muted: #5b6b78;
-    --line: #e3eaf0;
-    --bg: #f7fbff;
+/* Palette, typefaces and zero corner radius come from the game's own
+   src/ui/theme.ts. Keep them in step. */
+@font-face { font-family: Silkscreen; src: url(./media/fonts/silkscreen-400.woff2) format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: Silkscreen; src: url(./media/fonts/silkscreen-700.woff2) format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: VT323; src: url(./media/fonts/vt323-400.woff2) format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap; }
+
+:root {
+  --void: #03060c;
+  --bg: #060a13;
+  --panel: rgba(10, 18, 32, .82);
+  --line: #173049;
+  --line-bright: #27607c;
+  --cyan: #63f2ff;
+  --cyan-dim: #2b93ad;
+  --magenta: #ff2e88;
+  --magenta-dim: #9e2057;
+  --amber: #ffab3d;
+  --amber-dim: #ac6d22;
+  --text: #d7ecf7;
+  --dim: #6b8aa3;
+
+  --display: Silkscreen, "Courier New", ui-monospace, monospace;
+  --body: VT323, "Courier New", ui-monospace, monospace;
+  --gutter: clamp(18px, 5vw, 44px);
+  --col: 1180px;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--text);
+  font: 21px/1.5 var(--body);
+  letter-spacing: .01em;
+}
+
+/* height:auto, so the width/height attributes reserve the aspect ratio without
+   fighting a CSS width. */
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--cyan); }
+
+/* Only used where the source is shown at 1x or a whole multiple of it. */
+.px { image-rendering: pixelated; image-rendering: crisp-edges; }
+
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.25;
+  letter-spacing: .04em; margin: 0; }
+
+.wrap { max-width: var(--col); margin: 0 auto; padding: 0 var(--gutter); }
+
+.lit-cyan { color: var(--cyan); text-shadow: 0 0 10px rgba(99, 242, 255, .55); }
+.lit-magenta { color: var(--magenta); text-shadow: 0 0 10px rgba(255, 46, 136, .5); }
+.lit-amber { color: var(--amber); text-shadow: 0 0 10px rgba(255, 171, 61, .45); }
+
+/* -- the dress: grid, scanlines, vignette, rain ---------------------------- */
+
+.grid-tex, .scan, .vig, .rain { position: absolute; inset: 0; pointer-events: none; }
+
+.grid-tex {
+  background-image:
+    linear-gradient(rgba(39, 96, 124, .10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(39, 96, 124, .10) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+.scan {
+  background: repeating-linear-gradient(to bottom,
+    rgba(0, 0, 0, .30) 0 1px, rgba(0, 0, 0, 0) 1px 3px);
+  mix-blend-mode: multiply;
+}
+.vig { background: radial-gradient(125% 100% at 50% 40%, transparent 42%, rgba(3, 6, 12, .72) 100%); }
+.rain {
+  background: url(./media/rain.png) repeat;
+  background-size: 96px 128px;
+  image-rendering: pixelated;
+  opacity: .11;
+  animation: rainfall 1.1s linear infinite;
+}
+@keyframes rainfall { from { background-position: 0 0; } to { background-position: -34px 128px; } }
+
+/* -- hero ------------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: min(100svh, 920px);
+  display: flex;
+  align-items: center;
+  padding: clamp(72px, 12vh, 130px) 0 clamp(56px, 9vh, 96px);
+  /* THE SPRAWL's own sky, sampled from zones.ts: near-black blue overhead,
+     sodium haze at street level. */
+  background: linear-gradient(to bottom, #0a0d1a 0%, #0d1020 40%, #241a1c 70%, #4a2a1c 88%, #683620 100%);
+  overflow: hidden;
+}
+.hero-plate {
+  position: absolute; inset: 0; z-index: -2;
+  background: url(./media/hero-sprawl.png) repeat-x bottom center;
+  background-size: 360px auto;
+  image-rendering: pixelated;
+  opacity: .6;
+  /* dissolves into the CSS sky, so the repeat has no seam and no second horizon */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 52%, #000 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 52%, #000 100%);
+}
+/* Keeps the city behind the words; the hero has no panel to sit on. */
+.hero-scrim {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(3, 6, 12, .5) 0%, rgba(3, 6, 12, .2) 40%, rgba(3, 6, 12, .58) 100%),
+    linear-gradient(95deg, rgba(3, 6, 12, .93) 0%, rgba(3, 6, 12, .8) 34%, rgba(3, 6, 12, .34) 62%, rgba(3, 6, 12, .12) 100%);
+}
+.hero-ring {
+  position: absolute; z-index: -1;
+  top: -20%; right: -16%;
+  width: min(82vw, 720px); height: auto; aspect-ratio: 1;
+  opacity: .3;
+  animation: turn 300s linear infinite;
+  pointer-events: none;
+}
+@keyframes turn { to { transform: rotate(360deg); } }
+
+.hero > .wrap { position: relative; z-index: 2; width: 100%; }
+
+.eyebrow {
+  font-family: var(--display); font-weight: 400; font-size: 11px;
+  letter-spacing: .28em; text-transform: uppercase; margin: 0 0 22px;
+}
+.eyebrow .dot { display: inline-block; width: 6px; height: 6px; margin-right: 10px;
+  background: var(--magenta); box-shadow: 0 0 8px var(--magenta); vertical-align: middle;
+  animation: pulse 2.4s steps(1) infinite; }
+@keyframes pulse { 0%, 60% { opacity: 1; } 61%, 100% { opacity: .25; } }
+
+.wordmark {
+  font-size: clamp(46px, 12.5vw, 128px);
+  letter-spacing: .06em;
+  margin: 0;
+  color: var(--cyan);
+  text-shadow: 0 0 6px rgba(99, 242, 255, .9), 0 0 26px rgba(99, 242, 255, .55),
+               0 0 64px rgba(43, 147, 173, .5);
+  animation: flicker 9s linear infinite;
+}
+/* A neon sign that never falters is a picture of a neon sign. */
+@keyframes flicker {
+  0%, 88%, 100% { opacity: 1; }
+  89% { opacity: .55; } 90% { opacity: 1; }
+  93% { opacity: .72; } 94% { opacity: 1; }
+}
+.subtitle {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(11px, 2.5vw, 17px); letter-spacing: .2em;
+  margin: 16px 0 0;
+}
+
+/* The hazard rule under a poster headline, in the app's amber. */
+.hazard {
+  height: 6px; width: 168px; margin: 22px 0;
+  background: repeating-linear-gradient(115deg,
+    var(--amber) 0 9px, transparent 9px 18px);
+  box-shadow: 0 0 12px rgba(255, 171, 61, .35);
+}
+
+
+.lede { font-size: clamp(21px, 2.9vw, 30px); line-height: 1.4; max-width: 22em;
+  color: var(--text); margin: 4px 0 36px; }
+.lede b { color: var(--cyan); font-weight: 400; }
+
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 22px; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--display); font-weight: 700; font-size: 15px; letter-spacing: .1em;
+  text-decoration: none; padding: 17px 26px; border: 1px solid var(--cyan);
+  color: var(--cyan); background: rgba(99, 242, 255, .07);
+  box-shadow: 0 0 22px rgba(99, 242, 255, .18), inset 0 0 22px rgba(99, 242, 255, .05);
+  transition: background .16s ease, box-shadow .16s ease, color .16s ease;
+}
+.btn:hover, .btn:focus-visible {
+  background: rgba(99, 242, 255, .16); color: #eafdff;
+  box-shadow: 0 0 34px rgba(99, 242, 255, .4), inset 0 0 26px rgba(99, 242, 255, .1);
+}
+.btn svg { flex: none; }
+.btn-ghost { border-color: var(--line-bright); color: var(--text); background: transparent;
+  box-shadow: none; font-size: 13px; padding: 15px 22px; }
+.btn-ghost:hover, .btn-ghost:focus-visible { border-color: var(--cyan-dim); color: var(--cyan);
+  background: rgba(99, 242, 255, .05); box-shadow: none; }
+
+.price-note { font-size: 19px; color: var(--dim); }
+.price-note strong { color: var(--amber); font-weight: 400; }
+
+/* The robot stands on nothing in particular and bounces anyway, which is the
+   whole game. */
+.hopper { position: relative; flex: none; width: 96px; height: 156px; }
+.hopper .bot { position: absolute; left: 0; bottom: 40px; width: 96px;
+  filter: drop-shadow(0 0 14px rgba(99, 242, 255, .3));
+  animation: hop 1.15s infinite; }
+.hopper .flame { position: absolute; left: 34px; bottom: 6px; width: 28px;
+  opacity: .95; animation: hop 1.15s infinite, flick .18s steps(2) infinite; }
+/* the ledge it keeps landing back on */
+.hopper::after { content: ""; position: absolute; left: 4px; bottom: 0; width: 88px; height: 3px;
+  background: var(--cyan-dim); box-shadow: 0 0 12px rgba(99, 242, 255, .5); }
+@keyframes hop {
+  0%   { transform: translateY(0);     animation-timing-function: cubic-bezier(.17, .72, .38, 1); }
+  50%  { transform: translateY(-46px); animation-timing-function: cubic-bezier(.6, 0, .82, .3); }
+  100% { transform: translateY(0); }
+}
+@keyframes flick { 0% { opacity: .85; } 100% { opacity: .45; } }
+
+.hero-bottom { display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 24px; margin-top: 44px; }
+.scroll-cue { display: inline-flex; align-items: center; gap: 11px;
+  font-family: var(--display); font-size: 11px; letter-spacing: .22em;
+  color: var(--cyan); text-shadow: 0 0 10px rgba(99, 242, 255, .45); text-decoration: none; }
+.scroll-cue:hover, .scroll-cue:focus-visible { color: #fff; }
+.scroll-cue span { display: block; width: 0; height: 0; border: 6px solid transparent;
+  border-top: 8px solid currentColor; border-bottom: 0;
+  animation: nudge 2.2s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+/* -- ticker ---------------------------------------------------------------- */
+
+.ticker { position: relative; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background: var(--void); overflow: hidden; padding: 13px 0; }
+.ticker-track { display: flex; width: max-content; animation: slide 46s linear infinite; }
+.ticker-track > div { font-family: var(--display); font-size: 11px; letter-spacing: .26em;
+  color: var(--cyan-dim); white-space: nowrap; padding-right: 30px; }
+.ticker-track b { color: var(--amber); font-weight: 400; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* -- generic section ------------------------------------------------------- */
+
+section { position: relative; }
+.band { padding: clamp(72px, 11vw, 132px) 0; background: var(--bg); }
+.band + .band { border-top: 1px solid rgba(23, 48, 73, .55); }
+/* The faint grid the app draws under every menu. */
+.band::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(39, 96, 124, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(39, 96, 124, .055) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(90% 70% at 50% 50%, #000 20%, transparent 100%);
+  mask-image: radial-gradient(90% 70% at 50% 50%, #000 20%, transparent 100%);
+}
+.band > * { position: relative; }
+
+h2.head { font-size: clamp(26px, 4.6vw, 44px); letter-spacing: .05em; margin: 0 0 20px;
+  text-wrap: balance; }
+.head-sub { font-size: clamp(20px, 2.2vw, 24px); color: var(--dim); max-width: 34em; margin: 0; }
+
+/* -- panels ---------------------------------------------------------------- */
+
+.panel { position: relative; border: 1px solid var(--line); background: var(--panel);
+  padding: 26px 24px 28px; }
+/* The corner notch every panel in the app's menus wears. */
+.panel::after { content: ""; position: absolute; right: -1px; bottom: -1px;
+  width: 13px; height: 13px; border-right: 2px solid var(--cyan-dim);
+  border-bottom: 2px solid var(--cyan-dim); }
+.panel h3 { font-size: 15px; letter-spacing: .1em; margin: 0 0 10px; }
+.panel p { margin: 0; color: var(--dim); font-size: 20px; line-height: 1.45; }
+
+.rules { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(258px, 1fr));
+  margin-top: 46px; }
+.rules .panel { display: flex; flex-direction: column; }
+.rule-art { height: 84px; display: flex; align-items: flex-end; gap: 12px; margin-bottom: 18px; }
+.rule-art img { height: auto; }
+.rule-art .r-bot { width: 52px; animation: hop 1.4s infinite; }
+.rule-art .r-drone { width: 66px; animation: drift 3.4s ease-in-out infinite; }
+.rule-art .r-alloy { width: 40px; animation: drift 2.6s ease-in-out infinite; }
+@keyframes drift { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(7px, -9px); } }
+
+/* The machine and what comes out of it, in one picture. */
+.rule-art-stomp { position: relative; }
+.rule-art-stomp .r-scrap { position: absolute; width: 22px; opacity: .95; }
+.rule-art-stomp .r-scrap-a { left: 76px; bottom: 50px; animation: drift 2.4s ease-in-out infinite; }
+.rule-art-stomp .r-scrap-b { left: 102px; bottom: 20px; animation: drift 3.1s ease-in-out infinite .4s; }
+.rule-art-stomp .r-scrap-c { left: 42px; bottom: 60px; animation: drift 2.7s ease-in-out infinite .9s; }
+
+/* Lighter than the rule panels: these are objects, not points being made. */
+.gear { list-style: none; padding: 0; margin: 40px 0 0; display: grid; gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); }
+.gear li { border: 1px solid var(--line); background: var(--panel);
+  padding: 30px 18px 22px; display: flex; flex-direction: column;
+  align-items: center; gap: 22px; }
+.gear img { width: 56px; animation: drift 3.4s ease-in-out infinite; }
+.gear li:nth-child(2) img { animation-duration: 4.1s; animation-delay: .5s; }
+.gear li:nth-child(3) img { animation-duration: 3.7s; animation-delay: .2s; }
+.gear li:nth-child(4) img { animation-duration: 4.4s; animation-delay: .8s; }
+.gear h3 { font-size: 13px; letter-spacing: .14em; }
+
+/* -- gallery --------------------------------------------------------------- */
+
+/* Full-bleed scroller whose first card lines up with the content column.
+   Padding, not a negative margin - that overflows the page by the gutter. */
+.gallery { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 46px max(var(--gutter), calc((100% - var(--col)) / 2 + var(--gutter))) 20px;
+  scrollbar-width: thin; scrollbar-color: var(--line-bright) transparent; }
+.shot { flex: none; width: 300px; scroll-snap-align: center; }
+.shot .frame { border: 1px solid var(--line-bright); padding: 5px; background: #000;
+  box-shadow: 0 0 34px rgba(0, 0, 0, .8); position: relative; }
+.shot .frame::after { content: ""; position: absolute; inset: 5px; pointer-events: none;
+  background: repeating-linear-gradient(to bottom,
+    rgba(0, 0, 0, .22) 0 1px, rgba(0, 0, 0, 0) 1px 3px); }
+.shot figcaption { font-family: var(--display); font-size: 11px; letter-spacing: .18em;
+  color: var(--cyan-dim); margin-top: 14px; }
+.scroll-hint { font-family: var(--display); font-size: 10px; letter-spacing: .2em;
+  color: var(--line-bright); margin: 18px 0 0; }
+
+/* -- the promise ----------------------------------------------------------- */
+
+.promise { background: var(--void); text-align: center; }
+.promise-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px;
+  list-style: none; padding: 0; margin: 0 0 30px; }
+.promise-list li { font-family: var(--display); font-size: clamp(12px, 2.3vw, 17px);
+  letter-spacing: .12em; border: 1px solid var(--amber-dim); color: var(--amber);
+  padding: 12px 18px; }
+.promise p { color: var(--dim); font-size: 21px; max-width: 44em; margin: 0 auto 14px; }
+.promise p a { color: var(--cyan-dim); }
+
+/* -- final ----------------------------------------------------------------- */
+
+.final { text-align: center; padding: clamp(80px, 12vw, 150px) 0;
+  background: linear-gradient(to bottom, #05040e, #1a0b2c 55%, #06040f); position: relative;
+  overflow: hidden; }
+.final .hero-ring { top: 50%; left: 50%; right: auto; transform-origin: center;
+  width: min(120vw, 900px); margin: min(-60vw, -450px) 0 0 min(-60vw, -450px); opacity: .26; }
+.final > .wrap { position: relative; z-index: 1; }
+.final h2 { font-size: clamp(24px, 5vw, 46px); margin-bottom: 18px; }
+.final p { color: var(--dim); font-size: 22px; margin: 0 auto 34px; max-width: 30em; }
+.final .cta-row { justify-content: center; }
+
+/* -- footer ---------------------------------------------------------------- */
+
+footer.site { background: var(--void); border-top: 1px solid var(--line);
+  padding: 54px 0 62px; font-size: 19px; color: var(--dim); }
+.foot-grid { display: grid; gap: 30px; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+footer.site h4 { font-family: var(--display); font-weight: 400; font-size: 10px;
+  letter-spacing: .22em; color: var(--line-bright); margin: 0 0 12px; text-transform: uppercase; }
+footer.site ul { list-style: none; padding: 0; margin: 0; }
+footer.site li { margin: 6px 0; }
+footer.site a { color: var(--dim); text-decoration: none; border-bottom: 1px solid transparent; }
+footer.site a:hover, footer.site a:focus-visible { color: var(--cyan); border-bottom-color: var(--cyan-dim); }
+.colophon { margin-top: 40px; padding-top: 22px; border-top: 1px solid rgba(23, 48, 73, .6);
+  font-size: 17px; color: #4c6479; display: flex; flex-wrap: wrap; gap: 8px 20px;
+  justify-content: space-between; }
+
+/* -- reveal ---------------------------------------------------------------- */
+
+.js .reveal { opacity: 0; transform: translateY(18px); }
+.js .reveal.in { opacity: 1; transform: none;
+  transition: opacity .6s ease, transform .6s cubic-bezier(.2, .7, .3, 1); }
+
+:where(a, button):focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+.skip { position: absolute; left: -9999px; }
+.skip:focus { left: 12px; top: 12px; z-index: 99; background: var(--void); color: var(--cyan);
+  padding: 12px 16px; border: 1px solid var(--cyan); font-family: var(--display); font-size: 12px; }
+
+/* ------------------------------------------------------------------ ≥ 900px */
+@media (min-width: 900px) {
+  .shot { width: 290px; }
+}
+
+/* ------------------------------------------------------------- < 560px */
+@media (max-width: 560px) {
+  .btn { font-size: 12px; letter-spacing: .08em; padding: 16px 18px; width: 100%;
+    justify-content: center; }
+  .btn-ghost { font-size: 11px; }
+  .cta-row { gap: 14px; }
+  .hero-bottom { flex-direction: column-reverse; align-items: flex-start; gap: 30px; }
+  .hopper { align-self: flex-end; margin-right: 8px; }
+}
+
+/* -------------------------------------------------------- reduced motion -- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rain, .hero-ring, .wordmark, .ticker-track, .hopper .bot, .hopper .flame,
+  .scroll-cue span, .eyebrow .dot, .rule-art img, .gear img {
+    animation: none !important;
   }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif;
-  }
-  .wrap { max-width: 760px; margin: 0 auto; padding: 0 22px 72px; }
-  header {
-    background: linear-gradient(135deg, #10243a 0%, #03060c 100%);
-    color: #fff;
-    padding: 56px 22px 46px;
-    text-align: center;
-  }
-  header img { display: block; width: 88px; height: 88px; border-radius: 20px;
-    margin: 0 auto 20px; box-shadow: 0 8px 24px rgba(0, 20, 40, .5); }
-  header h1 { margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -.4px;
-    color: var(--cyan); }
-  header p { margin: 8px 0 0; opacity: .82; font-size: 16px; }
-  main { background: #fff; margin-top: -22px; border-radius: 16px;
-    box-shadow: 0 1px 0 var(--line), 0 12px 30px rgba(20, 50, 80, .06);
-    padding: 8px 34px 34px; }
-  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .08em;
-    color: var(--muted); margin: 30px 0 12px; }
-  h2:first-of-type { margin-top: 24px; }
-  p { margin: 12px 0; }
-  a { color: var(--cyan-ink); }
-  ul { padding-left: 22px; margin: 12px 0; }
-  li { margin: 8px 0; }
-  .lede { font-size: 18px; }
-  footer { color: var(--muted); font-size: 14px; text-align: center;
-    padding-top: 30px; }
-  footer a { color: var(--cyan-ink); }
-  @media (max-width: 560px) {
-    header { padding: 44px 20px 38px; }
-    header h1 { font-size: 26px; }
-    main { padding: 6px 20px 28px; }
-  }
+  .js .reveal { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
-  <header>
-    <img src="./icon.png" alt="" />
-    <h1>NEON HALO</h1>
-    <p>Rise of the Jumpbot 5000</p>
-  </header>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="hero">
+  <div class="hero-plate" aria-hidden="true"></div>
+  <img class="hero-ring px" src="./media/ring.png" alt="" aria-hidden="true" width="320" height="320" />
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="grid-tex" aria-hidden="true"></div>
+  <div class="rain" aria-hidden="true"></div>
+  <div class="scan" aria-hidden="true"></div>
+  <div class="vig" aria-hidden="true"></div>
 
   <div class="wrap">
-  <main>
+    <p class="eyebrow lit-magenta"><span class="dot"></span>Nexus Salvage Unit // Online</p>
+
+    <h1 class="wordmark">NEON HALO</h1>
+    <p class="subtitle lit-amber">RISE OF THE JUMPBOT 5000</p>
+
+    <div class="hazard" aria-hidden="true"></div>
+
     <p class="lede">
-      A pixel-art endless vertical jumper for Android. You play a scavenged
-      mech auto-bouncing up an endless column of platforms; tilt the phone to
-      steer. Climb through seven altitude zones — the rain and refinery flares
-      of THE SPRAWL, up past the derelict skyline, out through orbit and the
-      breaking yards, into the neon halo itself. Fall off the bottom and
-      it&rsquo;s over.
+      Tilt to steer. Ascend from the rainy streets, to space and beyond.
     </p>
 
-    <h2>Privacy</h2>
-    <ul>
-      <li><a href="./privacy/">Privacy policy (Google Play)</a></li>
-      <li><a href="./privacy/app-store/">Privacy policy (App Store)</a></li>
-      <li><a href="./delete-data/">Delete your data</a></li>
-    </ul>
+    <div class="cta-row">
+      <a class="btn" href="https://play.google.com/store/apps/details?id=dk.antontanderup.neonhalo">
+        <svg width="17" height="19" viewBox="0 0 17 19" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M.6.4A1.6 1.6 0 0 0 .1 1.6v15.8c0 .5.2.9.5 1.2l8.3-8.1L.6.4Zm10 9.1 2.6-2.5-9.9-5.6 7.3 8.1Zm0 1 2.6 2.5-9.9 5.6 7.3-8.1Zm3.9-1.8 2-1.2c.6-.3.6-1.2 0-1.5l-2-1.2-2.9 2 2.9 1.9Z"/>
+        </svg>
+        Get it on Google Play
+      </a>
+      <p class="price-note"><strong>Paid once.</strong> No ads, no in-app purchases, plays offline.</p>
+    </div>
 
-    <h2>Support</h2>
-    <p>
-      Bug reports, feature requests and anything else:
-      <a href="mailto:anton@adamsen.io">anton@adamsen.io</a>
-    </p>
-
-    <footer>
-      <a href="/">Mediocre Applications</a>
-    </footer>
-  </main>
+    <div class="hero-bottom">
+      <a class="scroll-cue" href="#shots"><span aria-hidden="true"></span>ALTITUDE 0 M</a>
+      <div class="hopper" aria-hidden="true">
+        <img class="bot px" src="./media/bot.png" alt="" width="22" height="24" />
+        <img class="flame px" src="./media/flame.png" alt="" width="12" height="16" />
+      </div>
+    </div>
   </div>
+</header>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <div>// TO ALL SALVAGE UNITS &nbsp;// STANDING ORDER: <b>ASCEND</b> &nbsp;// MACHINES IN THE LANE, LAND ON THEIR HEADS &nbsp;// NO ADS, NOT EVER &nbsp;// THE COLUMN HAS NO TOP &nbsp;</div>
+    <div>// TO ALL SALVAGE UNITS &nbsp;// STANDING ORDER: <b>ASCEND</b> &nbsp;// MACHINES IN THE LANE, LAND ON THEIR HEADS &nbsp;// NO ADS, NOT EVER &nbsp;// THE COLUMN HAS NO TOP &nbsp;</div>
+  </div>
+</div>
+
+<main id="main">
+
+  <!-- ---------------------------------------------------------- gallery -->
+  <section class="band" id="shots">
+    <div class="wrap reveal">
+      <h2 class="head lit-cyan">Screenshots</h2>
+      <p class="scroll-hint">&larr; drag &rarr;</p>
+    </div>
+
+    <div class="gallery">
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-01-spinner-alley.png"
+          alt="A flying car parked in the lane, standing in for a platform."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>SPINNER ALLEY</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-02-offworld-blimp.png"
+          alt="An advertising blimp holding station between two towers."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>THE OFF-WORLD BLIMP</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-03-checkpoint.png"
+          alt="An airspace gate and the patrol car working the lane."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>THE CHECKPOINT</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-04-berths.png"
+          alt="The lit decks of a liner's accommodation block, mid-dismantling."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>THE BERTHS</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-05-interrogation.png"
+          alt="Searchlights raking dust around a lamp gantry."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>THE INTERROGATION</figcaption>
+      </figure>
+      <figure class="shot">
+        <div class="frame"><img src="./media/shot-06-arc-section.png"
+          alt="Curved plates of the ring habitat, with the ring itself behind."
+          width="720" height="1440" loading="lazy" /></div>
+        <figcaption>THE ARC SECTION</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ rules -->
+  <section class="band" id="rules">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 class="head lit-cyan">Aim the bounce. Stomp the rest.</h2>
+      </div>
+
+      <div class="rules">
+        <div class="panel reveal">
+          <div class="rule-art" aria-hidden="true">
+            <img class="r-bot px" src="./media/bot.png" alt="" width="22" height="24" />
+          </div>
+          <h3 class="lit-cyan">NEVER STOP JUMPING</h3>
+          <p>
+            Steer by tilting your phone, or use touch controls and drag with
+            your finger.
+          </p>
+        </div>
+
+        <div class="panel reveal">
+          <div class="rule-art rule-art-stomp" aria-hidden="true">
+            <img class="r-drone px" src="./media/drone.png" alt="" width="20" height="14" />
+            <img class="r-scrap r-scrap-a px" src="./media/alloy.png" alt="" width="12" height="10" />
+            <img class="r-scrap r-scrap-b px" src="./media/alloy.png" alt="" width="12" height="10" />
+            <img class="r-scrap r-scrap-c px" src="./media/alloy.png" alt="" width="12" height="10" />
+          </div>
+          <h3 class="lit-magenta">JUMP ON YOUR FOES</h3>
+          <p>
+            Land on hostile machines to break them apart and pick up scrap and
+            alloy from their remains.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------- gear -->
+  <section class="band">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 class="head lit-cyan">Salvage what you can carry.</h2>
+      </div>
+
+      <ul class="gear">
+        <li class="reveal">
+          <img class="px" src="./media/gear-rocket.png" alt="" width="14" height="18" />
+          <h3 class="lit-cyan">ROCKET</h3>
+        </li>
+        <li class="reveal">
+          <img class="px" src="./media/gear-hover.png" alt="" width="14" height="18" />
+          <h3 class="lit-cyan">HOVER</h3>
+        </li>
+        <li class="reveal">
+          <img class="px" src="./media/gear-coil.png" alt="" width="14" height="18" />
+          <h3 class="lit-cyan">COIL</h3>
+        </li>
+        <li class="reveal">
+          <img class="px" src="./media/gear-shield.png" alt="" width="14" height="18" />
+          <h3 class="lit-cyan">SHIELD</h3>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ---------------------------------------------------------- promise -->
+  <section class="band promise">
+    <div class="wrap">
+      <div class="reveal">
+        <h2 class="head" style="color:#fff">One price, and that&rsquo;s it.</h2>
+      </div>
+      <ul class="promise-list reveal">
+        <li>PAID ONCE</li>
+        <li>NO ADS</li>
+        <li>NO IN-APP PURCHASES</li>
+        <li>NO ACCOUNT</li>
+        <li>PLAYS OFFLINE</li>
+      </ul>
+      <div class="reveal">
+        <p>
+          Buy it once and it&rsquo;s yours. Nothing phones home, and your save
+          stays on your phone.
+        </p>
+        <p>
+          Sign in to Play Games for leaderboards and a cloud backup, or
+          don&rsquo;t. The rest is in the <a href="./privacy/">privacy policy</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ------------------------------------------------------------ final -->
+  <section class="final">
+    <img class="hero-ring px" src="./media/ring.png" alt="" aria-hidden="true" width="320" height="320" />
+    <div class="grid-tex" aria-hidden="true"></div>
+    <div class="scan" aria-hidden="true"></div>
+    <div class="wrap">
+      <h2 class="lit-cyan">How high can you get?</h2>
+      <div class="cta-row">
+        <a class="btn" href="https://play.google.com/store/apps/details?id=dk.antontanderup.neonhalo">
+          <svg width="17" height="19" viewBox="0 0 17 19" aria-hidden="true" focusable="false">
+            <path fill="currentColor" d="M.6.4A1.6 1.6 0 0 0 .1 1.6v15.8c0 .5.2.9.5 1.2l8.3-8.1L.6.4Zm10 9.1 2.6-2.5-9.9-5.6 7.3 8.1Zm0 1 2.6 2.5-9.9 5.6 7.3-8.1Zm3.9-1.8 2-1.2c.6-.3.6-1.2 0-1.5l-2-1.2-2.9 2 2.9 1.9Z"/>
+          </svg>
+          Get it on Google Play
+        </a>
+        <a class="btn btn-ghost" href="mailto:anton@adamsen.io">Email the developer</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <h4>NEON HALO</h4>
+        <ul>
+          <li><a href="https://play.google.com/store/apps/details?id=dk.antontanderup.neonhalo">Google Play</a></li>
+          <li><a href="mailto:anton@adamsen.io">Support &amp; bug reports</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Privacy</h4>
+        <ul>
+          <li><a href="./privacy/">Privacy policy (Google Play)</a></li>
+          <li><a href="./privacy/app-store/">Privacy policy (App Store)</a></li>
+          <li><a href="./delete-data/">Delete your data</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="/">Mediocre Applications</a></li>
+          <li><a href="/minimal-launcher/">Mediocre Minimal Launcher</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="colophon">
+      <span>Made by Anton &middot; <a href="mailto:anton@adamsen.io">anton@adamsen.io</a></span>
+      <span>Silkscreen and VT323, under the SIL Open Font License.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add("js");
+
+(function () {
+  // Reveal on entry. One observer, unobserving as it goes.
+  if ("IntersectionObserver" in window) {
+    var reveal = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("in");
+        reveal.unobserve(e.target);
+      });
+    }, { rootMargin: "0px 0px -12% 0px" });
+    document.querySelectorAll(".reveal").forEach(function (el) { reveal.observe(el); });
+  } else {
+    document.querySelectorAll(".reveal").forEach(function (el) { el.classList.add("in"); });
+  }
+
+})();
+</script>
 </body>
 </html>
