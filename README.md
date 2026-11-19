@@ -14,17 +14,23 @@ index.html              brand landing page (lists the apps)
 .nojekyll               serve files as-is (no Jekyll build)
 hass-todo/
   privacy/index.html    Todo for Home Assistant — privacy policy
+  terms/index.html      Todo for Home Assistant — terms of service
 minimal-launcher/
   index.html            Mediocre Minimal Launcher — app page (screenshots, features)
   icon.png              app icon, used by the app page and the landing card
   screenshots/*.png     phone screenshots shown on the app page
   privacy/index.html    Mediocre Minimal Launcher — privacy policy
+  terms/index.html      Mediocre Minimal Launcher — terms of service
+bit-pet-climber/
+  privacy/index.html    Bit Pet Climber — privacy policy (Google Play)
+  terms/index.html      Bit Pet Climber — terms of service (Google Play)
 neon-halo/
   index.html            NEON HALO — app page (description, support)
   icon.png              app icon, used by the app page and the landing card
   privacy/index.html            NEON HALO — privacy policy (Google Play)
   privacy/app-store/index.html  NEON HALO — privacy policy (App Store)
   delete-data/index.html        NEON HALO — how to delete your data
+  terms/index.html              NEON HALO — terms of service (Google Play)
 ```
 
 Each app gets its own top-level folder. Stable URLs to paste into Play Console:
@@ -35,6 +41,19 @@ Each app gets its own top-level folder. Stable URLs to paste into Play Console:
 | Mediocre Minimal Launcher | `https://mediocre-applications.github.io/minimal-launcher/privacy/` |
 | NEON HALO (Google Play) | `https://mediocre-applications.github.io/neon-halo/privacy/` |
 | NEON HALO (App Store) | `https://mediocre-applications.github.io/neon-halo/privacy/app-store/` |
+
+Google Play's trader verification also asks for a **Terms of service URL**.
+Each app has its own page at `<app>/terms/`, written for its Google Play
+listing (what it costs, how purchases and refunds work, what it depends on).
+Each one shares the look of the app's privacy policy and links back
+to it; when an app gains purchases or a new service, update both.
+
+| App | Terms of service URL |
+|---|---|
+| Todo for Home Assistant | `https://mediocre-applications.github.io/hass-todo/terms/` |
+| Mediocre Minimal Launcher | `https://mediocre-applications.github.io/minimal-launcher/terms/` |
+| NEON HALO (Google Play) | `https://mediocre-applications.github.io/neon-halo/terms/` |
+| Bit Pet Climber (Google Play) | `https://mediocre-applications.github.io/bit-pet-climber/terms/` |
 
 Play Console also asks for a **Delete data URL** in the Data safety form,
 separately from the privacy policy. It has its own rules: it must name the app
